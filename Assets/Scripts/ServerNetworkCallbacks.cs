@@ -20,7 +20,6 @@ public class ServerNetworkCallbacks : GlobalEventListener
 
         if (BoltNetwork.IsServer)
         {
-            Debug.LogWarning("Local Aqui mano");
             BoltNetwork.Instantiate(BoltPrefabs.GameState, spawnPos, Quaternion.identity);
             SpawnLights();
         }
@@ -28,7 +27,7 @@ public class ServerNetworkCallbacks : GlobalEventListener
 
     public override void SceneLoadRemoteDone(BoltConnection connection, IProtocolToken token)
     {
-        Debug.LogWarning("Remote Aqui mano");
+        //Debug.LogWarning("Remote Aqui mano");
 
         SpawnLights();
     }
@@ -66,7 +65,7 @@ public class ServerNetworkCallbacks : GlobalEventListener
 
         foreach (var position in positions)
         {
-            BoltNetwork.Instantiate(BoltPrefabs.CrystalX, position, Quaternion.identity);
+            BoltNetwork.Instantiate(BoltPrefabs.Crystal, position, Quaternion.identity);
         }
     }
 }

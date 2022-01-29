@@ -4887,7 +4887,7 @@
           "ReplicationMode": 1,
           "Priority": 1,
           "PropertyType": {
-            "$type": "Photon.Bolt.Compiler.PropertyTypeTrigger, bolt.compiler"
+            "$type": "Photon.Bolt.Compiler.PropertyTypeBool, bolt.compiler"
           },
           "AssetSettings": {
             "$type": "Photon.Bolt.Compiler.PropertyStateSettings, bolt.compiler",
@@ -4904,7 +4904,7 @@
           "ReplicationMode": 1,
           "Priority": 1,
           "PropertyType": {
-            "$type": "Photon.Bolt.Compiler.PropertyTypeTrigger, bolt.compiler"
+            "$type": "Photon.Bolt.Compiler.PropertyTypeBool, bolt.compiler"
           },
           "AssetSettings": {
             "$type": "Photon.Bolt.Compiler.PropertyStateSettings, bolt.compiler",
@@ -4965,6 +4965,26 @@
           "PropertyType": {
             "$type": "Photon.Bolt.Compiler.PropertyTypeInteger, bolt.compiler",
             "MaxValue": 255
+          },
+          "AssetSettings": {
+            "$type": "Photon.Bolt.Compiler.PropertyStateSettings, bolt.compiler",
+            "ExtrapolationErrorTolerance": 0.25,
+            "_ExtrapolationCorrectionFrames": 6,
+            "ExtrapolationMaxFrames": 9,
+            "SnapMagnitude": 10.0
+          }
+        },
+        {
+          "Name": "TeamBalanceCount",
+          "Enabled": true,
+          "Expanded": true,
+          "ReplicationMode": 1,
+          "Priority": 1,
+          "PropertyType": {
+            "$type": "Photon.Bolt.Compiler.PropertyTypeInteger, bolt.compiler",
+            "MinValue": -128,
+            "MaxValue": 127,
+            "CompressionEnabled": true
           },
           "AssetSettings": {
             "$type": "Photon.Bolt.Compiler.PropertyStateSettings, bolt.compiler",

@@ -6,8 +6,11 @@ public class BasicCharacter : EntityBehaviour<ICustomStatePlayer>
 
     public static BasicCharacter Local;
 
+    public Vector3 lightTeamSpawnCenter = new Vector3(0.0f, 0.0f, 6.0f);
+    public float teamSpawnRadius = 1.0f;
+    public Vector3 darkTeamSpawnCenter = new Vector3(0.0f, 0.0f, -6.0f);
 
-    private static readonly int WALK_PROPERTY = Animator.StringToHash("Walk");
+    //private static readonly int WALK_PROPERTY = Animator.StringToHash("Walk");
 
     public Camera Camera;
 
@@ -40,12 +43,12 @@ public class BasicCharacter : EntityBehaviour<ICustomStatePlayer>
         {
             //Debug.LogWarning("Destroy!!!");
             //GetComponentInChildren<AudioListener>().enabled = false;
-            GetComponentInChildren<Camera>().enabled = false;
+            //GetComponentInChildren<Camera>().enabled = false;
         }
         else
         {
             Local = this;
-            if(!Entered && GameState.Instance != null)
+            if(!Entered && GameState.Instance != null && GameState.Instance.IsReady())
             {
                 Enter();
             }
@@ -54,12 +57,26 @@ public class BasicCharacter : EntityBehaviour<ICustomStatePlayer>
         //Debug.LogWarning("transform: " + transform.position + " is Owner " + entity.IsOwner);
     }
 
+    private bool dark = false;
+
     public void Enter()
     {
         if (Entered) return;
         Entered = true;
-        state.Dark = GameState.Instance.IsNextPlayerDark();
+        dark = GameState.Instance.IsNextPlayerDark();
+        state.Dark = dark;
         state.Nickname = "Ghost #" + (GameState.Instance.state.NextPlayerId+1);
+        //Debug.LogWarning("Enter " + GameState.Instance.state.NextPlayerId  + " Dark " + state.Dark);
+        if (state.Dark)
+        {
+            transform.position = darkTeamSpawnCenter;
+        }
+        else
+        {
+            transform.position = lightTeamSpawnCenter;
+        }
+        transform.position += new Vector3(UnityEngine.Random.Range(-teamSpawnRadius, teamSpawnRadius), 0.0f, UnityEngine.Random.Range(-teamSpawnRadius, teamSpawnRadius));
+
         PlayerEnter enter = PlayerEnter.Create(GlobalTargets.Everyone);
         enter.Player = entity;
         enter.Dark = state.Dark;

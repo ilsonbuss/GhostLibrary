@@ -15,7 +15,7 @@ public class Menu : GlobalEventListener
 
     public override void BoltStartDone()
     {
-        BoltMatchmaking.CreateSession("test7", sceneToLoad: "Game");
+        BoltMatchmaking.CreateSession("test9fds", sceneToLoad: "Game");
     }
 
     public void StartClient()

@@ -29,11 +29,11 @@ public class BasicCharacter : EntityBehaviour<ICustomStatePlayer>
 
         state.SetAnimator(animator);
 
-        if(GameState.Instance.entity.IsOwner)
-        {
-            Debug.LogWarning("Chamou Server = " + BoltNetwork.IsServer);
-            GameState.Instance.ServerSpawnPlayer(this.entity);
-        }
+        //if(GameState.Instance.entity.IsOwner)
+        //{
+        //    Debug.LogWarning("Chamou Server = " + BoltNetwork.IsServer);
+        //    GameState.Instance.ServerSpawnPlayer(this.entity);
+        //}
 
         //if (entity.IsOwner)
         //{
@@ -77,11 +77,6 @@ public class BasicCharacter : EntityBehaviour<ICustomStatePlayer>
 
         // Normalize
         _movement = new Vector3(inputX, 0, inputY).normalized;
-
-        //if (state.IsMoving)
-        //{
-        //    //state.Animator.SetBool(WALK_PROPERTY, Math.Abs(_movement.sqrMagnitude) > Mathf.Epsilon);
-        //}
 
         physicsBody.velocity = (_movement * speed) * 4;
     }

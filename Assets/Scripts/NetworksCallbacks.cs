@@ -15,7 +15,7 @@ public class NetworksCallbacks : GlobalEventListener
 
         if (BoltNetwork.IsServer)
         {
-            BoltNetwork.Instantiate(gameStatePrefab, spawnPos, Quaternion.identity);
+            //BoltNetwork.Instantiate(gameStatePrefab, spawnPos, Quaternion.identity);
         }
 
         BoltNetwork.Instantiate(cubePrefab, spawnPos, Quaternion.identity);

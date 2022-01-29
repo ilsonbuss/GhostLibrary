@@ -1896,10 +1896,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Manager
       objectReference: {fileID: 0}
-    - target: {fileID: 4946631126703804382, guid: 459e3ed65ed949c49a0a16417f557051, type: 3}
-      propertyPath: lightPrefab
-      value: 
-      objectReference: {fileID: 4079095841400011057, guid: ea27e0bd5b9e6f24a9f6df0bdd44d4ee, type: 3}
     - target: {fileID: 4946631126703804383, guid: 459e3ed65ed949c49a0a16417f557051, type: 3}
       propertyPath: m_RootOrder
       value: 3

@@ -119,7 +119,7 @@ public class BasicCharacter : EntityBehaviour<ICustomStatePlayer>
 
         if (entity.IsAttached)
         {
-            state.Animator.SetBool(WALK_PROPERTY, state.IsMoving);
+            //state.Animator.SetBool(WALK_PROPERTY, state.IsMoving);
         }
     }
 

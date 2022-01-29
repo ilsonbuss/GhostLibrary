@@ -150,7 +150,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ead55584d9ddae84bb1785c05a0ab1b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Camera: {fileID: 7299349453643647594}
   speed: 1
   animator: {fileID: 3017691585687792391}
   physicsBody: {fileID: 3017691586154895996}
@@ -198,7 +197,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sceneGuid: 
   _serializerGuid: 9bbe745e-8385-46fc-a74b-d52ac302f573
-  _prefabId: 1
+  _prefabId: 2
   _updateRate: 1
   _autoFreezeProxyFrames: 0
   _clientPredicted: 1

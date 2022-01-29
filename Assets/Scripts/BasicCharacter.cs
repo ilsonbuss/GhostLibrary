@@ -25,10 +25,16 @@ public class BasicCharacter : EntityBehaviour<ICustomStatePlayer>
     public override void Attached()
     {
 
-
         state.SetTransforms(state.CustomCubeTransform, transform);
 
         state.SetAnimator(animator);
+
+        if(GameState.Instance.entity.IsOwner)
+        {
+            Debug.LogWarning("Chamou Server = " + BoltNetwork.IsServer);
+            GameState.Instance.ServerSpawnPlayer(this.entity);
+        }
+
         //if (entity.IsOwner)
         //{
         //    state.CubeColor = new Color(Random.value, Random.value, Random.value);
@@ -58,6 +64,7 @@ public class BasicCharacter : EntityBehaviour<ICustomStatePlayer>
             inputX = -1;
             spriteRenderer.flipX = true;
         }
+
 
         if (inputX != 0 || inputY != 0)
         {

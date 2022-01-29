@@ -15,12 +15,38 @@ public class NetworksCallbacks : GlobalEventListener
 
         if (BoltNetwork.IsServer)
         {
-            //BoltNetwork.Instantiate(gameStatePrefab, spawnPos, Quaternion.identity);
+            BoltNetwork.Instantiate(gameStatePrefab, spawnPos, Quaternion.identity);
         }
 
         BoltNetwork.Instantiate(cubePrefab, spawnPos, Quaternion.identity);
-
-
-
     }
+
+    public override void OnEvent(PlayerEnter e)
+    {
+        //e.Player.gameObject
+
+        if(BoltNetwork.IsServer)
+        {
+            GameState.Instance.ServerSpawnPlayer(e.Player, e.Dark);
+        }
+
+        Debug.LogWarning("PlayerEnter " + e.Nickname + " Dark: " + e.Dark);
+    }
+
+    public override void OnEvent(PlayerSwap e)
+    {
+        //Not implemented
+    }
+
+
+    public override void OnEvent(PlayerLeave e)
+    {
+        if (BoltNetwork.IsServer)
+        {
+            GameState.Instance.ServerRemovePlayer(e.player);
+        }
+
+        Debug.LogWarning("PlayerLeave " + e.player);
+    }
+
 }

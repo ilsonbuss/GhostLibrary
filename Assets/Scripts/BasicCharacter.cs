@@ -4,6 +4,10 @@ using Photon.Bolt;
 
 public class BasicCharacter : EntityBehaviour<ICustomStatePlayer>
 {
+
+    public static BasicCharacter Local;
+
+
     private static readonly int WALK_PROPERTY = Animator.StringToHash("Walk");
 
     [SerializeField]
@@ -21,6 +25,9 @@ public class BasicCharacter : EntityBehaviour<ICustomStatePlayer>
 
     private Vector3 _movement;
 
+    public bool Entered { get; set; }
+    public bool Left { get; set; }
+
     //similar to Start
     public override void Attached()
     {
@@ -29,16 +36,44 @@ public class BasicCharacter : EntityBehaviour<ICustomStatePlayer>
 
         state.SetAnimator(animator);
 
-        //if(GameState.Instance.entity.IsOwner)
-        //{
-        //    Debug.LogWarning("Chamou Server = " + BoltNetwork.IsServer);
-        //    GameState.Instance.ServerSpawnPlayer(this.entity);
-        //}
+        if(entity.IsOwner == false)
+        {
+            //Debug.LogWarning("Destroy!!!");
+            //GetComponentInChildren<AudioListener>().enabled = false;
+            GetComponentInChildren<Camera>().enabled = false;
+        }
+        else
+        {
+            Local = this;
+            if(!Entered && GameState.Instance != null)
+            {
+                Enter();
+            }
+        }
 
-        //if (entity.IsOwner)
-        //{
-        //    state.CubeColor = new Color(Random.value, Random.value, Random.value);
-        //}
+        //Debug.LogWarning("transform: " + transform.position + " is Owner " + entity.IsOwner);
+    }
+
+    public void Enter()
+    {
+        if (Entered) return;
+        Entered = true;
+        state.Dark = GameState.Instance.IsNextPlayerDark();
+        state.Nickname = "Ghost #" + (GameState.Instance.state.NextPlayerId+1);
+        PlayerEnter enter = PlayerEnter.Create(GlobalTargets.Everyone);
+        enter.Player = entity;
+        enter.Dark = state.Dark;
+        enter.Nickname = state.Nickname;
+        enter.Send();
+    }
+
+
+    public void Leave()
+    {
+        if (Left) return;
+        PlayerLeave left = PlayerLeave.Create(GlobalTargets.Everyone);
+        left.player = entity;
+        left.Send();
     }
 
     //similar to Update
@@ -88,4 +123,11 @@ public class BasicCharacter : EntityBehaviour<ICustomStatePlayer>
             state.Animator.SetBool(WALK_PROPERTY, state.IsMoving);
         }
     }
+
+    private void OnApplicationQuit()
+    {
+        Leave();
+    }
+
+
 }

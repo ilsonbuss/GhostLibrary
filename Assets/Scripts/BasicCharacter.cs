@@ -1,10 +1,11 @@
-using System;
 using UnityEngine;
 using Photon.Bolt;
 
 public class BasicCharacter : EntityBehaviour<ICustomStatePlayer>
 {
     private static readonly int WALK_PROPERTY = Animator.StringToHash("Walk");
+
+    public Camera Camera;
 
     [SerializeField]
     private float speed = 1f;
@@ -24,21 +25,14 @@ public class BasicCharacter : EntityBehaviour<ICustomStatePlayer>
     //similar to Start
     public override void Attached()
     {
-
-
         state.SetTransforms(state.CustomCubeTransform, transform);
 
         state.SetAnimator(animator);
-        //if (entity.IsOwner)
-        //{
-        //    state.CubeColor = new Color(Random.value, Random.value, Random.value);
-        //}
     }
 
     //similar to Update
     public override void SimulateOwner()
     {
-
         // Vertical
         float inputY = 0;
         if (Input.GetKey(KeyCode.UpArrow))
@@ -81,6 +75,11 @@ public class BasicCharacter : EntityBehaviour<ICustomStatePlayer>
 
     public void Update()
     {
+        if (entity.IsOwner && !Camera.gameObject.activeInHierarchy)
+        {
+            Camera.gameObject.SetActive(true);
+        }
+
         if (entity.IsAttached)
         {
             state.Animator.SetBool(WALK_PROPERTY, state.IsMoving);

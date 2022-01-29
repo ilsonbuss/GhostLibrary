@@ -66,7 +66,7 @@ public class ServerNetworkCallbacks : GlobalEventListener
 
         foreach (var position in positions)
         {
-            BoltNetwork.Instantiate(BoltPrefabs.CrystalX, position, Quaternion.identity);
+            BoltNetwork.Instantiate(BoltPrefabs.Crystal, position, Quaternion.identity);
         }
     }
 }

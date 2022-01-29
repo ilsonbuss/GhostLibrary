@@ -6,7 +6,7 @@ public class MenuController : MonoBehaviour
 {
     public GameObject telaMenu;
     public GameObject telaCreditos;
-
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -34,4 +34,22 @@ public class MenuController : MonoBehaviour
         telaMenu.SetActive(true);
     }
 
+
+    public void ShowGameRoms()
+    {
+
+        UnityEngine.SceneManagement.SceneManager.LoadScene("PhotonLobby");
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
+
+    public void ReturnMenu()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MenuInicial");
+    }
+   
 }

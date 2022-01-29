@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/LobbyManager/Scenes/PhotonLobby.unity
+    guid: 42d6ac873a5b84d439478f72d40c21ce
+  - enabled: 0
     path: Assets/Scenes/Menu.unity
     guid: 198b75da9e068184197a72594a7e3aec
   - enabled: 1

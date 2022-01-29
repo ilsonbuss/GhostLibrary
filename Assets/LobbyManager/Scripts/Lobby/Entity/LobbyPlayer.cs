@@ -188,8 +188,8 @@ namespace Bolt.Samples.Photon.Lobby
 		private string GenerateFullName()
 		{
 			return string.Format("{0} {1}",
-					GenerateName(new System.Random(DateTime.Now.Second - 1000).Next(4, 10)),
-					GenerateName(new System.Random(DateTime.Now.Second + 1000).Next(4, 10))
+					GenerateName(5),
+					GenerateName(3)
 			);
 		}
 

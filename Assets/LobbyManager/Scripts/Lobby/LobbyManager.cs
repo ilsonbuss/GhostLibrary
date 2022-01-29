@@ -171,17 +171,17 @@ namespace Bolt.Samples.Photon.Lobby
         {
             if (BoltNetwork.IsServer)
             {
-                //var token = new RoomProtocolToken()
-                //{
-                //    ArbitraryData = "My DATA",
-                //};
+                var token = new RoomProtocolToken()
+                {
+                    ArbitraryData = "My DATA",
+                };
 
                 BoltLog.Info("Starting Server - Creating Session");
 
                 // Start Photon Room
                 BoltMatchmaking.CreateSession(
-                        sessionID: matchName
-                        //token: token
+                        sessionID: matchName,
+                        token: token
                 );
 
             }
@@ -205,7 +205,7 @@ namespace Bolt.Samples.Photon.Lobby
             SessionCreatedUIHandler(session);
 
             // Build Server Entity
-            var entity = BoltNetwork.Instantiate(BoltPrefabs.Character);
+            var entity = BoltNetwork.Instantiate(BoltPrefabs.PlayerInfo);
             entity.TakeControl();
         }
 
@@ -268,7 +268,7 @@ namespace Bolt.Samples.Photon.Lobby
             {
                 BoltLog.Info("Connected Server: {0}", connection);
 
-                var entity = BoltNetwork.Instantiate(BoltPrefabs.Character);
+                var entity = BoltNetwork.Instantiate(BoltPrefabs.PlayerInfo);
                 entity.AssignControl(connection);
             }
         }

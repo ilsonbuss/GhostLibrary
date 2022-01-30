@@ -76,6 +76,10 @@ public class CanvasHud : MonoBehaviour
     }
 
     void SyncTimeCount() {
+
+        if (GameState.Instance == null)
+            return;
+
         var textComponent = GameObject.FindWithTag("TimeCount").GetComponent<UnityEngine.UI.Text>();    
 
         float timeToEnd = GameState.Instance.MaxGameTime - (BoltNetwork.ServerTime - GameState.Instance.GameStartTime);

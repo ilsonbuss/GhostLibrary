@@ -74,12 +74,10 @@ public class BasicCharacter : EntityBehaviour<ICustomStatePlayer>
 
     IEnumerator AsyncSendEnter()
     {
-
-
         //yield on a new YieldInstruction that waits for 5 seconds.
         yield return new WaitForSeconds(Random.Range(0.5f, 3.5f));
 
-        Debug.LogError((int)entity.NetworkId.PackedValue);
+        //Debug.LogError((int)entity.NetworkId.PackedValue);
 
         dark = ((int)entity.NetworkId.PackedValue) % 2 == 0; //GameState.Instance.IsNextPlayerDark(); ////Random.Range(0, 2) == 0; //GameState.Instance.IsNextPlayerDark();
         state.Dark = dark;

@@ -32,6 +32,12 @@ public class LightManager : EntityBehaviour<ICrystalState>
         state.IsActive = stateFlag;
     }
 
+    public void SetState(bool stateFlag)
+    {
+        isActiveLocal = stateFlag;
+        state.IsActive = stateFlag;
+    }
+
     public void ActivateCallBack()
     {
         isActiveLocal = state.IsActive;

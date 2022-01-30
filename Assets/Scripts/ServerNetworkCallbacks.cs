@@ -58,11 +58,12 @@ public class ServerNetworkCallbacks : GlobalEventListener
     public override void OnEvent(CrystalHit e)
     {
         var lm = e.CrystalInstance.gameObject.GetComponent<LightManager>();
-        if(lm.state.IsActive == e.HitState)
+        if(lm.isActiveLocal == e.HitState)
         {
             return;
         }
-        lm.state.IsActive = e.HitState;
+        lm.SetState(e.HitState);
+        //lm.state.IsActive = e.HitState;
 
         Debug.LogWarning($"Server received event CrystalHit - State:" + (e.HitState ? "Light" : "Dark"));
         GameState.Instance.ServerComputeLight(e.HitState);

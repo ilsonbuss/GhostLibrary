@@ -1,5 +1,6 @@
 using UnityEngine;
 using Photon.Bolt;
+using System.Collections;
 
 public class BasicCharacter : EntityBehaviour<ICustomStatePlayer>
 {
@@ -64,6 +65,27 @@ public class BasicCharacter : EntityBehaviour<ICustomStatePlayer>
 
     private bool dark = false;
 
+
+    void Start()
+    {
+        //Start the coroutine we define below named ExampleCoroutine.
+        
+    }
+
+    IEnumerator AsyncSendEnter()
+    {
+
+        //yield on a new YieldInstruction that waits for 5 seconds.
+        yield return new WaitForSeconds(1.5f);
+
+        PlayerEnter enter = PlayerEnter.Create(GlobalTargets.Everyone, ReliabilityModes.ReliableOrdered);
+        enter.Player = entity;
+        enter.Dark = state.Dark;
+        enter.Nickname = state.Nickname;
+        enter.Send();
+        Debug.Log("Async send");
+    }
+
     public void Enter()
     {
         if (Entered) return;
@@ -74,11 +96,7 @@ public class BasicCharacter : EntityBehaviour<ICustomStatePlayer>
         //Debug.LogWarning("Enter " + GameState.Instance.state.NextPlayerId  + " Dark " + state.Dark);
         Respawn();
 
-        PlayerEnter enter = PlayerEnter.Create(GlobalTargets.Everyone);
-        enter.Player = entity;
-        enter.Dark = state.Dark;
-        enter.Nickname = state.Nickname;
-        enter.Send();
+        StartCoroutine(AsyncSendEnter());
 
         //if(dark)
         //{
@@ -169,8 +187,8 @@ public class BasicCharacter : EntityBehaviour<ICustomStatePlayer>
         targetQuat = Quaternion.Euler(new Vector3(ghost.transform.rotation.x, targetMoveAngle, ghost.transform.rotation.z));
 
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
             if (state.IsNearCrystal && nearCrystal != null)
             {
                 //ativa/desativa o cristal
@@ -181,7 +199,7 @@ public class BasicCharacter : EntityBehaviour<ICustomStatePlayer>
                     lightManager.Activate(!state.Dark);
                 }
             }
-        }
+        //}
 
 
 

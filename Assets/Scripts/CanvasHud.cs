@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Bolt;
 
 public class CanvasHud : MonoBehaviour
 {
@@ -33,6 +34,10 @@ public class CanvasHud : MonoBehaviour
         }
         //sum += Time.deltaTime / 10.0f;
         //setBarraProgresso(sum);
+    }
+
+    private void FixedUpdate() {
+        SyncTimeCount();    
     }
 
     void setBarraProgresso(float percent)
@@ -68,6 +73,19 @@ public class CanvasHud : MonoBehaviour
         //panelDark.GetComponent<RectTransform>().right = new Vector3(guiRight, guiRight, guiRight);
         var rt = panelDark.GetComponent<RectTransform>();
         rt.offsetMax = new Vector2(-guiRight, rt.offsetMax.y);
+    }
+
+    void SyncTimeCount() {
+        var textComponent = GameObject.FindWithTag("TimeCount").GetComponent<UnityEngine.UI.Text>();    
+
+        float timeToEnd = GameState.Instance.MaxGameTime - (BoltNetwork.ServerTime - GameState.Instance.GameStartTime);
+
+        textComponent.text = ((int) timeToEnd).ToString();
+
+        if(timeToEnd < 10) {
+            textComponent.color = Color.red;
+        }
+
     }
 
     void OnUpdateLightsOn()

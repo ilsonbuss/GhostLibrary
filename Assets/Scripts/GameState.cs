@@ -28,7 +28,7 @@ public class GameState : EntityBehaviour<IGameState>
         {
             MaxGameTime = 60f;
             state.GameStarted = true;
-            state.TotalCrystals = 6;
+            state.TotalCrystals = 8;
             state.AttackCooldown = 0.8f;
             state.LightsOn = state.TotalCrystals / 2;
             Ready1 = true; Ready2 = true;
@@ -55,7 +55,7 @@ public class GameState : EntityBehaviour<IGameState>
 
         var positionsUnique = LightSpawners.Select(l => l.transform.position).ToList();
         var positionsFinal = new List<Vector3>();
-        while (positionsFinal.Count < 6)
+        while (positionsFinal.Count < state.TotalCrystals)
         {
             var randIndex = Random.Range(0, positionsUnique.Count);
             if (LightSpawners[randIndex] != null)

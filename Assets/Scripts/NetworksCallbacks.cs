@@ -75,8 +75,6 @@ public class NetworksCallbacks : GlobalEventListener
 
     public override void OnEvent(PlayerEnter e)
     {
-
-
         var lightGhost = e.Player.gameObject.transform.Find("LightGhost").gameObject;
         var darkGhost = e.Player.gameObject.transform.Find("DarkGhost").gameObject;
         if (e.Dark)
@@ -85,8 +83,6 @@ public class NetworksCallbacks : GlobalEventListener
             darkGhost.SetActive(true);
             e.Player.gameObject.GetComponent<BasicCharacter>().ghost = darkGhost;
             //Destroy(lightGhost);
-            
-            
         }
         else
         {
@@ -104,7 +100,9 @@ public class NetworksCallbacks : GlobalEventListener
     }
     public override void OnEvent(CrystalHit e)
     {
-        if (e != null && e.CrystalInstance.gameObject.TryGetComponent(out LightManager lightManager) &&
+        if (e != null &&
+            e.CrystalInstance != null && 
+            e.CrystalInstance.gameObject.TryGetComponent(out LightManager lightManager) &&
             e.FromSelf == false)
         {
             lightManager.ActivateCallBack(e.HitState);

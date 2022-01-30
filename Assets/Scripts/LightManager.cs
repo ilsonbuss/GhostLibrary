@@ -17,14 +17,12 @@ public class LightManager : EntityBehaviour<ICrystalState>
         renderer = GetComponentInChildren<Renderer>();
         light = GetComponentInChildren<Light>();
         material = renderer.material;
-
-        //emissionColor = material.GetColor("_EmissionColor");
     }
 
     private void Start()
     {
         //start with the active state
-        Activate(state.InitState);
+        ActivateCallBack(state.InitState);
     }
 
     public void Activate(bool on)

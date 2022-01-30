@@ -53,6 +53,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5186621708719766567}
     m_Modifications:
+    - target: {fileID: -8836711575341217064, guid: ea4cb3e24cd5e6446823eb2ec3ff13d1, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ea4cb3e24cd5e6446823eb2ec3ff13d1, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -97,9 +101,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -5894159365958689719, guid: ea4cb3e24cd5e6446823eb2ec3ff13d1, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 476546092262363566, guid: ea4cb3e24cd5e6446823eb2ec3ff13d1, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 839401553695483202, guid: ea4cb3e24cd5e6446823eb2ec3ff13d1, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ea4cb3e24cd5e6446823eb2ec3ff13d1, type: 3}
       propertyPath: m_Name
       value: Personagem_Light_idle (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7726307766610791912, guid: ea4cb3e24cd5e6446823eb2ec3ff13d1, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ea4cb3e24cd5e6446823eb2ec3ff13d1, type: 3}

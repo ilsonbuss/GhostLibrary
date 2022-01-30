@@ -463,7 +463,7 @@ MonoBehaviour:
   teamSpawnRadius: 1
   darkTeamSpawnCenter: {x: 0, y: 0, z: -6}
   Camera: {fileID: 7299349453643647594}
-  speed: 1
+  speed: 2
   animator: {fileID: 2945626728228135410}
   physicsBody: {fileID: 3017691586154895996}
   ghost: {fileID: 6905161186268809090}
@@ -510,7 +510,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sceneGuid: 
   _serializerGuid: 9bbe745e-8385-46fc-a74b-d52ac302f573
-  _prefabId: 5
+  _prefabId: 4
   _updateRate: 1
   _autoFreezeProxyFrames: 0
   _clientPredicted: 1
@@ -551,13 +551,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3542823546757190896}
-  m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
-  m_LocalPosition: {x: 0.04, y: 3.76, z: -3.87}
+  m_LocalRotation: {x: 0.33881688, y: -0, z: -0, w: 0.94085234}
+  m_LocalPosition: {x: 0.03999999, y: 4.96, z: -3.36}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3017691586154895992}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 39.61, y: 0, z: 0}
 --- !u!20 &7299349453643647594
 Camera:
   m_ObjectHideFlags: 0

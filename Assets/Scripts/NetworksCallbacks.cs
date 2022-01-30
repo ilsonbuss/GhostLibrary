@@ -67,9 +67,15 @@ public class NetworksCallbacks : GlobalEventListener
     {
         //if the game is over and the video has finished
         //then we should return to lobby
+        //Debug.LogWarning("EndGame");
         if (waitEndState && GameState.Instance.state.GameFinished)
         {
-            SceneManager.LoadScene(lobbyScene.SimpleSceneName);
+            //Debug.LogWarning("Changed");
+            //Application.LoadLevel(0);
+            //SceneManager.LoadScene(0);
+            System.Diagnostics.Process.Start(Application.dataPath.Replace("_Data", ".exe")); //new program
+            Application.Quit(); //kill current process
+            //SceneManager.LoadScene(lobbyScene.SimpleSceneName);
         }
     }
 

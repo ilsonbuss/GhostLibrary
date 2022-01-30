@@ -33,7 +33,11 @@ public class ServerNetworkCallbacks : GlobalEventListener
         //Debug.Log($"Time:{BoltNetwork.ServerTime - GameState.Instance.GameStartTime}");
 
         if (GameState.Instance != null &&
-            (BoltNetwork.ServerTime - GameState.Instance.GameStartTime >= GameState.Instance.MaxGameTime) &&
+
+
+            ((BoltNetwork.ServerTime - GameState.Instance.GameStartTime >= GameState.Instance.MaxGameTime && GameState.Instance.state.LightsOn != GameState.Instance.state.TotalCrystals / 2) || GameState.Instance.state.LightsOn == 0 || GameState.Instance.state.LightsOn == GameState.Instance.state.TotalCrystals )
+            
+            &&
             GameState.Instance.state.GameFinished == false)
         {
             GameState.Instance.EndGame();
@@ -69,42 +73,4 @@ public class ServerNetworkCallbacks : GlobalEventListener
         GameState.Instance.ServerComputeLight(e.HitState);
     }
 
-
-    public void SpawnLights()
-    {
-        //Debug.Log("Spawning Lights --------------------------------------------------------------");
-
-        var LightSpawners = GameObject.FindGameObjectsWithTag("LightSpawnerMarker");
-        var positions = LightSpawners.Select(l => new
-        {
-            randomOrder = Random.Range(0, LightSpawners.Length),
-            position = l.transform.position
-        }).OrderBy(a => a.randomOrder)
-          .Take(6)
-          .Select(a => a.position);
-
-
-        //spawn active crystals
-        foreach (var position in positions.Take(3))
-        {
-            var entity = BoltNetwork.Instantiate(BoltPrefabs.Crystal, position, Quaternion.identity);
-            var lightManager = entity.gameObject.GetComponent<LightManager>();
-            if (lightManager != null)
-            {
-                lightManager.SetInitState(true);
-            }
-        }
-
-        //spawn black crystals
-        foreach (var position in positions.Skip(3))
-        {
-            var entity = BoltNetwork.Instantiate(BoltPrefabs.Crystal, position, Quaternion.identity);
-            var lightManager = entity.gameObject.GetComponent<LightManager>();
-            if (lightManager != null)
-            {
-                lightManager.SetInitState(false);
-            }
-        }
-
-    }
 }

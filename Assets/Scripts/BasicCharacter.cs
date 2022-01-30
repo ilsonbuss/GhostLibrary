@@ -40,14 +40,18 @@ public class BasicCharacter : EntityBehaviour<ICustomStatePlayer>
         state.SetTransforms(state.CustomCubeTransform, transform);
         state.SetAnimator(animator);
 
+
         if (entity.IsOwner == false)
         {
             //Debug.LogWarning("Destroy!!!");
-            //GetComponentInChildren<AudioListener>().enabled = false;
-            //GetComponentInChildren<Camera>().enabled = false;
+            GetComponentInChildren<AudioListener>().enabled = false;
+            GetComponentInChildren<Camera>().enabled = false;
         }
         else
         {
+            //GetComponentInChildren<AudioListener>().enabled = true;
+            //GetComponentInChildren<Camera>().enabled = false;
+
             Local = this;
             if (!Entered && GameState.Instance != null && GameState.Instance.IsReady())
             {
@@ -183,7 +187,7 @@ public class BasicCharacter : EntityBehaviour<ICustomStatePlayer>
 
         // Normalize
         _movement = new Vector3(inputX, 0, inputY).normalized;
-        physicsBody.velocity = (_movement * speed) * 4;
+        physicsBody.velocity = (_movement * speed) * 2;
     }
 
     public void Update()

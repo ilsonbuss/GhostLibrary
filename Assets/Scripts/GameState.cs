@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Bolt;
+using System.Linq;
 
 public class GameState : EntityBehaviour<IGameState>
 {
@@ -30,6 +31,7 @@ public class GameState : EntityBehaviour<IGameState>
             state.TotalCrystals = 20;
             state.AttackCooldown = 0.8f;
             Ready1 = true; Ready2 = true;
+            SpawnLights();
         }
 
         state.AddCallback("NextPlayerId", OnUpdateNextPlayerId);
@@ -42,6 +44,44 @@ public class GameState : EntityBehaviour<IGameState>
         //e.Send();
 
         //Debug.LogWarning("GameState criado! IsServer " + BoltNetwork.IsServer + " IsOwner " + entity.IsOwner + " TotalCrystal " + state.TotalCrystals);
+    }
+
+    public void SpawnLights()
+    {
+        //Debug.Log("Spawning Lights --------------------------------------------------------------");
+
+        var LightSpawners = GameObject.FindGameObjectsWithTag("LightSpawnerMarker");
+        var positions = LightSpawners.Select(l => new
+        {
+            randomOrder = Random.Range(0, LightSpawners.Length),
+            position = l.transform.position
+        }).OrderBy(a => a.randomOrder)
+          .Take(6)
+          .Select(a => a.position);
+
+
+        //spawn active crystals
+        foreach (var position in positions.Take(3))
+        {
+            var entity = BoltNetwork.Instantiate(BoltPrefabs.Crystal, position, Quaternion.identity);
+            var lightManager = entity.gameObject.GetComponent<LightManager>();
+            if (lightManager != null)
+            {
+                lightManager.SetInitState(true);
+            }
+        }
+
+        //spawn black crystals
+        foreach (var position in positions.Skip(3))
+        {
+            var entity = BoltNetwork.Instantiate(BoltPrefabs.Crystal, position, Quaternion.identity);
+            var lightManager = entity.gameObject.GetComponent<LightManager>();
+            if (lightManager != null)
+            {
+                lightManager.SetInitState(false);
+            }
+        }
+
     }
 
     private bool Ready1;

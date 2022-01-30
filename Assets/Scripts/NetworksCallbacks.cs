@@ -102,8 +102,8 @@ public class NetworksCallbacks : GlobalEventListener
     {
         if (e != null &&
             e.CrystalInstance != null && 
-            e.CrystalInstance.gameObject.TryGetComponent(out LightManager lightManager) &&
-            e.FromSelf == false)
+            e.CrystalInstance.gameObject.TryGetComponent(out LightManager lightManager))
+//            e.FromSelf == false)
         {
             lightManager.ActivateCallBack(e.HitState);
         }

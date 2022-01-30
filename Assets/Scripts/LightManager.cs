@@ -5,18 +5,15 @@ using UnityEngine;
 
 public class LightManager : EntityBehaviour<ICrystalState>
 {
-    new Renderer renderer;
-    Material material;
-    new Light light;
+    //new Renderer renderer;
+    //Material material;
+    //new Light light;
     public Color emissionColor;
-
-    public float defaultIntensity = 3f;
+    public float defaultIntensity;
 
     public override void Attached()
     {
-        renderer = GetComponentInChildren<Renderer>();
-        light = GetComponentInChildren<Light>();
-        material = renderer.material;
+        defaultIntensity = 3f;
     }
 
     private void Start()
@@ -35,39 +32,51 @@ public class LightManager : EntityBehaviour<ICrystalState>
     {
         if (on && state.IsActive == false)
         {
-            ActivateMaterial(on, defaultIntensity);
+            //ActivateMaterial(on, defaultIntensity);
 
             //ativa o estado global do cristal
             state.IsActive = true;
 
-            //se entrar aqui é por que o player esta próximo de um crystal e ativou ele
+            //se entrar aqui Ã© por que o player esta prÃ³ximo de um crystal e ativou ele
             var crystalEvent = CrystalHit.Create(GlobalTargets.Everyone, ReliabilityModes.ReliableOrdered);
             crystalEvent.HitState = true;
             crystalEvent.CrystalInstance = entity;
             crystalEvent.Send(); //avisa o servidor e demais players para registrar o evento de hit do cristal
+
+            Debug.LogWarning($"Cristal: {entity.NetworkId} - Acao: {on} | State: {state.IsActive}");
         }
         else if(on == false && state.IsActive == true)
         {
-            ActivateMaterial(on, defaultIntensity);
+            //ActivateMaterial(on, defaultIntensity);
 
             //desativa o estado global do cristal
             state.IsActive = false;
 
-            //se entrar aqui é por que o player esta próximo de um crystal e ativou ele
+            //se entrar aqui Ã© por que o player esta prÃ³ximo de um crystal e ativou ele
             var crystalEvent = CrystalHit.Create(GlobalTargets.Everyone, ReliabilityModes.ReliableOrdered);
             crystalEvent.HitState = false;
             crystalEvent.CrystalInstance = entity;
             crystalEvent.Send(); //avisa o servidor e demais players para registrar o evento de hit do cristal
+
+            Debug.LogWarning($"Cristal: {entity.NetworkId} - Acao: {on} | State: {state.IsActive}");
         }
+
+
+        
     }
 
     public void ActivateCallBack(bool shouldActivate)
     {
+        Debug.LogWarning($"Cristal Via evento - Acao: {shouldActivate} | State: {state.IsActive}");
+
         ActivateMaterial(shouldActivate, defaultIntensity);
     }
 
     private void ActivateMaterial(bool shouldActivate, float intensity)
     {
+        var light = GetComponentInChildren<Light>();
+        var material = GetComponentInChildren<Renderer>().material;
+
         if (shouldActivate)
         {
             light.intensity = intensity;
@@ -75,7 +84,7 @@ public class LightManager : EntityBehaviour<ICrystalState>
             material.globalIlluminationFlags = MaterialGlobalIlluminationFlags.RealtimeEmissive;
 
             material.SetColor("_EmissionColor", emissionColor * intensity);
-            DynamicGI.SetEmissive(renderer, emissionColor * intensity);
+            DynamicGI.SetEmissive(GetComponent<Renderer>(), emissionColor * intensity);
         }
         else
         {
@@ -84,7 +93,7 @@ public class LightManager : EntityBehaviour<ICrystalState>
             material.globalIlluminationFlags = MaterialGlobalIlluminationFlags.EmissiveIsBlack;
 
             material.SetColor("_EmissionColor", Color.black);
-            DynamicGI.SetEmissive(renderer, Color.black);
+            DynamicGI.SetEmissive(GetComponent<Renderer>(), Color.black);
         }
     }
 }

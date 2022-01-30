@@ -19,14 +19,12 @@ public class ServerNetworkCallbacks : GlobalEventListener
         var spawnPos = new Vector3(Random.Range(-8, 8), 0, Random.Range(-8, 8));
 
         BoltNetwork.Instantiate(BoltPrefabs.GameState, spawnPos, Quaternion.identity);
-        SpawnLights();
+        //SpawnLights();
     }
 
     public override void SceneLoadRemoteDone(BoltConnection connection, IProtocolToken token)
     {
-        //Debug.LogWarning("Remote Aqui mano");
-
-        SpawnLights();
+        //SpawnLights();
     }
 
     //update routine on server

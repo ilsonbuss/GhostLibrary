@@ -33,7 +33,11 @@ public class ServerNetworkCallbacks : GlobalEventListener
         //Debug.Log($"Time:{BoltNetwork.ServerTime - GameState.Instance.GameStartTime}");
 
         if (GameState.Instance != null &&
-            (BoltNetwork.ServerTime - GameState.Instance.GameStartTime >= GameState.Instance.MaxGameTime) &&
+
+
+            ((BoltNetwork.ServerTime - GameState.Instance.GameStartTime >= GameState.Instance.MaxGameTime && GameState.Instance.state.LightsOn != GameState.Instance.state.TotalCrystals / 2) || GameState.Instance.state.LightsOn == 0 || GameState.Instance.state.LightsOn == GameState.Instance.state.TotalCrystals )
+            
+            &&
             GameState.Instance.state.GameFinished == false)
         {
             GameState.Instance.EndGame();

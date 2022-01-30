@@ -24,9 +24,9 @@ public class GameState : EntityBehaviour<IGameState>
 
     public override void Attached()
     {
-        if(entity.IsOwner)
+        if (entity.IsOwner)
         {
-            MaxGameTime = 600f;
+            MaxGameTime = 60f;
             state.GameStarted = true;
             state.TotalCrystals = 6;
             state.AttackCooldown = 0.8f;
@@ -68,7 +68,7 @@ public class GameState : EntityBehaviour<IGameState>
         }
 
         //spawn active crystals
-        foreach (var position in positionsFinal.Take(3))
+        foreach (var position in positionsFinal.Take(positionsFinal.Count / 2))
         {
             var entity = BoltNetwork.Instantiate(BoltPrefabs.Crystal, position, Quaternion.identity);
             var lightManager = entity.gameObject.GetComponent<LightManager>();
@@ -79,7 +79,7 @@ public class GameState : EntityBehaviour<IGameState>
         }
 
         //spawn black crystals
-        foreach (var position in positionsFinal.Skip(3))
+        foreach (var position in positionsFinal.Skip(positionsFinal.Count / 2))
         {
             var entity = BoltNetwork.Instantiate(BoltPrefabs.Crystal, position, Quaternion.identity);
             var lightManager = entity.gameObject.GetComponent<LightManager>();
@@ -150,7 +150,7 @@ public class GameState : EntityBehaviour<IGameState>
             state.TeamBalanceCount -= 1;
             for (var i = 0; i < state.DarkPlayers.Length; i++)
             {
-                if(state.DarkPlayers[i] == null)
+                if (state.DarkPlayers[i] == null)
                 {
                     state.DarkPlayers[i] = playerEntity;
                 }
@@ -174,7 +174,7 @@ public class GameState : EntityBehaviour<IGameState>
         if (dark)
         {
             state.TeamBalanceCount += 1;
-        } 
+        }
         else
         {
             state.TeamBalanceCount -= 1;

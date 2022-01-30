@@ -84,7 +84,7 @@ public class LightManager : EntityBehaviour<ICrystalState>
 
         if (shouldActivate)
         {
-            //light.intensity = intensity;
+            light.intensity = intensity;
             material.EnableKeyword("_EMISSION");
             material.globalIlluminationFlags = MaterialGlobalIlluminationFlags.RealtimeEmissive;
 
@@ -93,7 +93,7 @@ public class LightManager : EntityBehaviour<ICrystalState>
         }
         else
         {
-            //light.intensity = 0f;
+            light.intensity = 0f;
             material.DisableKeyword("_EMISSION");
             material.globalIlluminationFlags = MaterialGlobalIlluminationFlags.EmissiveIsBlack;
 

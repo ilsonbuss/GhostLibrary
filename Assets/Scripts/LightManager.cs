@@ -10,27 +10,41 @@ public class LightManager : EntityBehaviour<ICrystalState>
     //new Light light;
     public Color emissionColor;
     public float defaultIntensity;
+    public bool isActiveLocal;
 
     public override void Attached()
     {
         defaultIntensity = 3f;
+
+        state.AddCallback("IsActive", ActivateCallBack);
     }
 
-    private void Start()
-    {
-        //start with the active state
-        ActivateCallBack(state.InitState);
-    }
+    //private void Start()
+    //{
+    //    //start with the active state
+    //    ActivateMaterial(isActiveLocal, defaultIntensity);
+    //}
 
     public void SetInitState(bool stateFlag)
     {
+        isActiveLocal = stateFlag;
         state.InitState = stateFlag;
         state.IsActive = stateFlag;
     }
 
+    public void ActivateCallBack()
+    {
+        isActiveLocal = state.IsActive;
+
+        ActivateMaterial(isActiveLocal, defaultIntensity);
+
+        Debug.LogWarning($"Cristal: {entity.NetworkId} - Acao: callBack | State: {state.IsActive}");
+    }
+
+
     public void Activate(bool on)
     {
-        if (on && state.IsActive == false)
+        if (on && isActiveLocal == false)
         {
             //ActivateMaterial(on, defaultIntensity);
 
@@ -45,7 +59,7 @@ public class LightManager : EntityBehaviour<ICrystalState>
 
             Debug.LogWarning($"Cristal: {entity.NetworkId} - Acao: {on} | State: {state.IsActive}");
         }
-        else if(on == false && state.IsActive == true)
+        else if(on == false && isActiveLocal == true)
         {
             //ActivateMaterial(on, defaultIntensity);
 
@@ -60,17 +74,14 @@ public class LightManager : EntityBehaviour<ICrystalState>
 
             Debug.LogWarning($"Cristal: {entity.NetworkId} - Acao: {on} | State: {state.IsActive}");
         }
-
-
-        
     }
 
-    public void ActivateCallBack(bool shouldActivate)
-    {
-        Debug.LogWarning($"Cristal Via evento - Acao: {shouldActivate} | State: {state.IsActive}");
+    //public void AcativateOnly(bool shouldActivate)
+    //{
+    //    Debug.LogWarning($"Cristal Via evento - Acao: {shouldActivate} | State: {state.IsActive}");
 
-        ActivateMaterial(shouldActivate, defaultIntensity);
-    }
+    //    ActivateMaterial(shouldActivate, defaultIntensity);
+    //}
 
     private void ActivateMaterial(bool shouldActivate, float intensity)
     {

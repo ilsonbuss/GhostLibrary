@@ -85,7 +85,7 @@ public class ServerNetworkCallbacks : GlobalEventListener
             var lightManager = entity.gameObject.GetComponent<LightManager>();
             if (lightManager != null)
             {
-                lightManager.state.InitState = true;
+                lightManager.SetInitState(true);
             }
         }
 
@@ -93,6 +93,11 @@ public class ServerNetworkCallbacks : GlobalEventListener
         foreach (var position in positions.Skip(3))
         {
             var entity = BoltNetwork.Instantiate(BoltPrefabs.Crystal, position, Quaternion.identity);
+            var lightManager = entity.gameObject.GetComponent<LightManager>();
+            if (lightManager != null)
+            {
+                lightManager.SetInitState(false);
+            }
         }
 
     }

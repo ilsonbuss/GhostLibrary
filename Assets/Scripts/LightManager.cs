@@ -25,6 +25,12 @@ public class LightManager : EntityBehaviour<ICrystalState>
         ActivateCallBack(state.InitState);
     }
 
+    public void SetInitState(bool stateFlag)
+    {
+        state.InitState = stateFlag;
+        state.IsActive = stateFlag;
+    }
+
     public void Activate(bool on)
     {
         if (on && state.IsActive == false)

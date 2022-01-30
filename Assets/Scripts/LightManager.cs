@@ -1,6 +1,7 @@
 using Photon.Bolt;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class LightManager : EntityBehaviour<ICrystalState>
@@ -38,7 +39,7 @@ public class LightManager : EntityBehaviour<ICrystalState>
 
         ActivateMaterial(isActiveLocal, defaultIntensity);
 
-        Debug.LogWarning($"Cristal: {entity.NetworkId} - Acao: callBack | State: {state.IsActive}");
+       // Debug.LogWarning($"Cristal: {entity.NetworkId} - Acao: callBack | State: {state.IsActive}");
     }
 
 
@@ -79,6 +80,12 @@ public class LightManager : EntityBehaviour<ICrystalState>
             cristal.gameObject.SetActive(true);
             cristal_black.gameObject.SetActive(false);
 
+            var somEfeitoOn = cristal.GetComponentsInChildren<AudioSource>().FirstOrDefault();
+            if (somEfeitoOn != null)
+            {
+                somEfeitoOn.Play();
+            }
+
             //material.EnableKeyword("_EMISSION");
             //material.globalIlluminationFlags = MaterialGlobalIlluminationFlags.RealtimeEmissive;
 
@@ -92,6 +99,11 @@ public class LightManager : EntityBehaviour<ICrystalState>
             cristal.gameObject.SetActive(false);
             cristal_black.gameObject.SetActive(true);
 
+            var somEfeitoOff = cristal_black.GetComponentsInChildren<AudioSource>().FirstOrDefault();
+            if (somEfeitoOff != null)
+            {
+                somEfeitoOff.Play();
+            }
 
             //material.DisableKeyword("_EMISSION");
             //material.globalIlluminationFlags = MaterialGlobalIlluminationFlags.EmissiveIsBlack;
@@ -109,6 +121,6 @@ public class LightManager : EntityBehaviour<ICrystalState>
         crystalEvent.CrystalInstance = entity;
         crystalEvent.Send(); //avisa o servidor e demais players para registrar o evento de hit do cristal
 
-        Debug.LogWarning($"Cristal: {entity.NetworkId} - Acao: {flag} | State: {state.IsActive}");
+        //Debug.LogWarning($"Cristal: {entity.NetworkId} - Acao: {flag} | State: {state.IsActive}");
     }
 }

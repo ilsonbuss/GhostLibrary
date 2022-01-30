@@ -8,6 +8,7 @@ TagManager:
   - LightPlayer
   - DarkPlayer
   - Crystal
+  - TimeCount
   layers:
   - Default
   - TransparentFX

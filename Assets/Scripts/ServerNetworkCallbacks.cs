@@ -18,11 +18,8 @@ public class ServerNetworkCallbacks : GlobalEventListener
         hasInitialized = true;
         var spawnPos = new Vector3(Random.Range(-8, 8), 0, Random.Range(-8, 8));
 
-        if (BoltNetwork.IsServer)
-        {
-            BoltNetwork.Instantiate(BoltPrefabs.GameState, spawnPos, Quaternion.identity);
-            SpawnLights();
-        }
+        BoltNetwork.Instantiate(BoltPrefabs.GameState, spawnPos, Quaternion.identity);
+        SpawnLights();
     }
 
     public override void SceneLoadRemoteDone(BoltConnection connection, IProtocolToken token)
@@ -40,12 +37,9 @@ public class ServerNetworkCallbacks : GlobalEventListener
 
     public override void OnEvent(PlayerLeave e)
     {
-        if (BoltNetwork.IsServer)
-        {
-            GameState.Instance.ServerRemovePlayer(e.player);
-        }
+        GameState.Instance.ServerRemovePlayer(e.Dark);
 
-        Debug.LogWarning("PlayerLeave " + e.player);
+        Debug.LogWarning("PlayerLeave Dark: " + e.Dark);
     }
 
 

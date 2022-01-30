@@ -156,4 +156,16 @@ public class GameState : EntityBehaviour<IGameState>
     }
 
 
+    public void ServerComputeLight(bool lightStateOn)
+    {
+        if (lightStateOn)
+        {
+            state.LightsOn++;
+        }
+        else
+        {
+            state.LightsOn--;
+        }
+    }
+
 }

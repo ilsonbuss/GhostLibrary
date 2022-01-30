@@ -143,15 +143,12 @@ public class BasicCharacter : EntityBehaviour<ICustomStatePlayer>
         {
             if (state.IsNearCrystal && nearCrystal != null)
             {
-                //se entrar aqui é por que o player esta próximo de um crystal e ativou ele
-                var crystalEvent = CrystalHit.Create(GlobalTargets.Everyone, ReliabilityModes.ReliableOrdered);
-                crystalEvent.isTeamDark = state.Dark; //a variavel Dark indica o time
-                crystalEvent.Send(); //avisa o servidor e demais players para registrar o evento de hit do cristal
-
-                //ativa o cristal
+                //ativa/desativa o cristal
                 if (nearCrystal.TryGetComponent(out LightManager lightManager))
                 {
-                    lightManager.Activate(true);
+                    //se for time DARK, desativa
+                    //se forma time Light, ativa
+                    lightManager.Activate(state.Dark? false :  true);
                 }
             }
         }
@@ -193,6 +190,7 @@ public class BasicCharacter : EntityBehaviour<ICustomStatePlayer>
         if (other.TryGetComponent(typeof(LightManager), out Component component))
         {
             state.IsNearCrystal = false;
+            nearCrystal = null;
         }
     }
 

@@ -42,6 +42,12 @@ public class ServerNetworkCallbacks : GlobalEventListener
         Debug.LogWarning("PlayerLeave Dark: " + e.Dark);
     }
 
+    public override void OnEvent(CrystalHit e)
+    {
+        Debug.LogWarning($"Server received event CrystalHit - State:" + (e.HitState ? "Light":"Dark"));
+        GameState.Instance.ServerComputeLight(e.HitState);
+    }
+
 
     public void SpawnLights()
     {

@@ -5,13 +5,13 @@ using UnityEngine;
 
 public class LightManager : MonoBehaviour
 {
-    new Renderer renderer; 
+    new Renderer renderer;
     Material material;
     Color emissionColor;
-    
+
     public bool active;
 
-    void Start() 
+    void Start()
     {
         renderer = GetComponentInChildren<Renderer>();
         material = renderer.material;
@@ -20,15 +20,16 @@ public class LightManager : MonoBehaviour
     }
 
 
-    void Update() 
+    void Update()
     {
-        Activate(active);
+ 
     }
 
     public void Activate(bool on, float intensity = 1f)
     {
-        if (on) 
+        if (on && active == false)
         {
+            active = true;
             material.EnableKeyword("_EMISSION");
             material.globalIlluminationFlags = MaterialGlobalIlluminationFlags.RealtimeEmissive;
 
@@ -42,16 +43,23 @@ public class LightManager : MonoBehaviour
             //ativa o estado global do cristal
             if (TryGetComponent(out BoltEntity crystalEntity))
             {
+                //se entrar aqui é por que o player esta próximo de um crystal e ativou ele
+                var crystalEvent = CrystalHit.Create(GlobalTargets.Everyone, ReliabilityModes.ReliableOrdered);
+                crystalEvent.HitState = true;
+                crystalEvent.Send(); //avisa o servidor e demais players para registrar o evento de hit do cristal
+
                 if (crystalEntity is ICrystalState)
                 {
                     (crystalEntity as ICrystalState).IsActive = true;
                 }
             }
 
-        } 
-        else
+            Debug.Log("Ativou cristal");
+        }
+        else if(on == false && active == true)
         {
 
+            active = false;
             material.DisableKeyword("_EMISSION");
             material.globalIlluminationFlags = MaterialGlobalIlluminationFlags.EmissiveIsBlack;
 
@@ -61,15 +69,21 @@ public class LightManager : MonoBehaviour
             DynamicGI.SetEmissive(renderer, Color.black);
             DynamicGI.UpdateEnvironment();
 
-
-            //ativa o estado global do cristal
+            //desativa o estado global do cristal
             if (TryGetComponent(out BoltEntity crystalEntity))
             {
+                //se entrar aqui é por que o player esta próximo de um crystal e ativou ele
+                var crystalEvent = CrystalHit.Create(GlobalTargets.Everyone, ReliabilityModes.ReliableOrdered);
+                crystalEvent.HitState = false;
+                crystalEvent.Send(); //avisa o servidor e demais players para registrar o evento de hit do cristal
+
                 if (crystalEntity is ICrystalState)
                 {
                     (crystalEntity as ICrystalState).IsActive = false;
                 }
             }
+
+            Debug.Log("Desativou cristal");
         }
     }
 }

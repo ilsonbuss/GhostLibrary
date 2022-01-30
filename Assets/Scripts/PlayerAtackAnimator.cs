@@ -6,6 +6,8 @@ public class PlayerAtackAnimator : MonoBehaviour
 {
     Animator animator;
 
+    public AudioSource AudioAtack;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +21,8 @@ public class PlayerAtackAnimator : MonoBehaviour
         //if (Input.GetMouseButtonDown(0))
         {
             animator.SetTrigger("AtackTrigger");
+            AudioAtack.gameObject.SetActive(true);
+            AudioAtack.Play();
         }
     }
 }

@@ -103,7 +103,6 @@ public class BasicCharacter : EntityBehaviour<ICustomStatePlayer>
         //Debug.LogWarning("Enter " + GameState.Instance.state.NextPlayerId  + " Dark " + state.Dark);
         Respawn();
 
-        var controller = entity.Controller;
 
         //if(controller == null)
         //{

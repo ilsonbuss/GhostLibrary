@@ -192,7 +192,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.02749495, y: 0.9077294}
   m_AnchorMax: {x: 0.42876792, y: 0.9864941}
-  m_AnchoredPosition: {x: -7.7453613, y: -28.692993}
+  m_AnchoredPosition: {x: -7.7453613, y: -28.691895}
   m_SizeDelta: {x: 9.874237, y: 8.2482605}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4240505197617895858
@@ -544,7 +544,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 359.6692, y: 8.9254}
+  m_AnchoredPosition: {x: 362.3, y: 8.9254}
   m_SizeDelta: {x: 62.5871, y: 44.0869}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4240505198321561430
@@ -672,6 +672,7 @@ GameObject:
   - component: {fileID: 4240505198502517313}
   - component: {fileID: 4240505198502517326}
   - component: {fileID: 4240505198502517327}
+  - component: {fileID: 3707312527283287675}
   m_Layer: 0
   m_Name: CanvasHud
   m_TagString: Untagged
@@ -760,6 +761,25 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &3707312527283287675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4240505198502517324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8bbb2579c50a7349b7d390a31026e64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panelDark: {fileID: 4240505199314778023}
+  darkLosing: {fileID: 4240505198360022396}
+  darkWinning: {fileID: 4240505199361782052}
+  darkTie: {fileID: 4240505197328022370}
+  lightLosing: {fileID: 4240505198019744559}
+  lightWinning: {fileID: 4240505197902664769}
+  lightTie: {fileID: 4240505198321561429}
 --- !u!1 &4240505199314778023
 GameObject:
   m_ObjectHideFlags: 0

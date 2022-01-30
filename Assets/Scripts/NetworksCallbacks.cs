@@ -75,6 +75,8 @@ public class NetworksCallbacks : GlobalEventListener
 
     public override void OnEvent(PlayerEnter e)
     {
+        if (e == null) return;
+
         var lightGhost = e.Player.gameObject.transform.Find("LightGhost").gameObject;
         var darkGhost = e.Player.gameObject.transform.Find("DarkGhost").gameObject;
         if (e.Dark)

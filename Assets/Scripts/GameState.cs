@@ -30,6 +30,7 @@ public class GameState : EntityBehaviour<IGameState>
             state.GameStarted = true;
             state.TotalCrystals = 20;
             state.AttackCooldown = 0.8f;
+            state.LightsOn = state.TotalCrystals / 2;
             Ready1 = true; Ready2 = true;
             SpawnLights();
         }

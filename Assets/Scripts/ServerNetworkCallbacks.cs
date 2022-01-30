@@ -32,6 +32,8 @@ public class ServerNetworkCallbacks : GlobalEventListener
     //update routine on server
     public void Update()
     {
+        Debug.Log($"Time:{BoltNetwork.ServerTime - GameState.Instance.GameStartTime}");
+
         if (GameState.Instance != null &&
             (BoltNetwork.ServerTime - GameState.Instance.GameStartTime >= GameState.Instance.MaxGameTime) &&
             GameState.Instance.state.GameFinished == false)

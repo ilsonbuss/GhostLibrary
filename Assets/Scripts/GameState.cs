@@ -18,13 +18,14 @@ public class GameState : EntityBehaviour<IGameState>
     #endregion
 
     public float GameStartTime;
-    public float MaxGameTime = 60f;
+    public float MaxGameTime;
     public enum Team { NONE, LIGHT, DARK }
 
     public override void Attached()
     {
         if(entity.IsOwner)
         {
+            MaxGameTime = 7f;
             state.GameStarted = true;
             state.TotalCrystals = 20;
             state.AttackCooldown = 0.8f;

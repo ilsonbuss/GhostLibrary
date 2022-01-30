@@ -104,7 +104,8 @@ public class NetworksCallbacks : GlobalEventListener
     }
     public override void OnEvent(CrystalHit e)
     {
-        if (e != null && e.CrystalInstance.gameObject.TryGetComponent(out LightManager lightManager))
+        if (e != null && e.CrystalInstance.gameObject.TryGetComponent(out LightManager lightManager) &&
+            e.FromSelf == false)
         {
             lightManager.ActivateCallBack(e.HitState);
         }

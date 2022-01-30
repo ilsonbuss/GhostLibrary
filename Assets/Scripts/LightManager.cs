@@ -51,7 +51,7 @@ public class LightManager : EntityBehaviour<ICrystalState>
 
             //se entrar aqui é por que o player esta próximo de um crystal e ativou ele
             var crystalEvent = CrystalHit.Create(GlobalTargets.Everyone, ReliabilityModes.ReliableOrdered);
-            crystalEvent.HitState = true;
+            crystalEvent.HitState = false;
             crystalEvent.CrystalInstance = entity;
             crystalEvent.Send(); //avisa o servidor e demais players para registrar o evento de hit do cristal
         }

@@ -75,6 +75,8 @@ public class NetworksCallbacks : GlobalEventListener
 
     public override void OnEvent(PlayerEnter e)
     {
+
+
         var lightGhost = e.Player.gameObject.transform.Find("LightGhost").gameObject;
         var darkGhost = e.Player.gameObject.transform.Find("DarkGhost").gameObject;
         if (e.Dark)
@@ -95,9 +97,12 @@ public class NetworksCallbacks : GlobalEventListener
             
         }
 
+        Debug.LogWarning("PlayerEnter " + e.Nickname + " Dark: " + e.Dark + " IsOwner: " + e.Player.IsOwner);
+
         //GameState.Instance.ServerSpawnPlayer(e.Player, e.Dark);
         //Debug.LogWarning("PlayerEnter " + e.Nickname + " Dark: " + e.Dark);
     }
+
 
 
 }

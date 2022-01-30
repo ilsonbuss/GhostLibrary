@@ -48,7 +48,6 @@ public class ServerNetworkCallbacks : GlobalEventListener
     public override void OnEvent(PlayerEnter e)
     {
         GameState.Instance.ServerSpawnPlayer(e.Player, e.Dark);
-        Debug.LogWarning("PlayerEnter " + e.Nickname + " Dark: " + e.Dark);
     }
 
     public override void OnEvent(PlayerLeave e)

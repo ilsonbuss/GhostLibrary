@@ -174,7 +174,7 @@ public class BasicCharacter : EntityBehaviour<ICustomStatePlayer>
                 {
                     //se for time DARK, desativa
                     //se forma time Light, ativa
-                    lightManager.Activate(state.Dark ? false : true);
+                     lightManager.Activate(state.Dark);
                 }
             }
         }

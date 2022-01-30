@@ -60,28 +60,41 @@ public class ServerNetworkCallbacks : GlobalEventListener
 
     public override void OnEvent(CrystalHit e)
     {
-        Debug.LogWarning($"Server received event CrystalHit - State:" + (e.HitState ? "Light":"Dark"));
+        Debug.LogWarning($"Server received event CrystalHit - State:" + (e.HitState ? "Light" : "Dark"));
         GameState.Instance.ServerComputeLight(e.HitState);
     }
 
 
     public void SpawnLights()
     {
-        Debug.Log("Spawning Lights --------------------------------------------------------------");
+        //Debug.Log("Spawning Lights --------------------------------------------------------------");
 
         var LightSpawners = GameObject.FindGameObjectsWithTag("LightSpawnerMarker");
         var positions = LightSpawners.Select(l => new
         {
             randomOrder = Random.Range(0, LightSpawners.Length),
             position = l.transform.position
-        })
-            .OrderBy(a => a.randomOrder)
-            .Take(4)
-            .Select(a => a.position);
+        }).OrderBy(a => a.randomOrder)
+          .Take(6)
+          .Select(a => a.position);
 
-        foreach (var position in positions)
+
+        //spawn active crystals
+        foreach (var position in positions.Take(3))
         {
-            BoltNetwork.Instantiate(BoltPrefabs.Crystal, position, Quaternion.identity);
+            var entity = BoltNetwork.Instantiate(BoltPrefabs.Crystal, position, Quaternion.identity);
+            var lightManager = entity.gameObject.GetComponent<LightManager>();
+            if (lightManager != null)
+            {
+                lightManager.initState = true;
+            }
         }
+
+        //spawn black crystals
+        foreach (var position in positions.Skip(3))
+        {
+            var entity = BoltNetwork.Instantiate(BoltPrefabs.Crystal, position, Quaternion.identity);
+        }
+
     }
 }

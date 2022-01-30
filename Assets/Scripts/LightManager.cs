@@ -7,16 +7,22 @@ public class LightManager : MonoBehaviour
 {
     new Renderer renderer;
     Material material;
-    Color emissionColor;
+    new Light light;
+    public Color emissionColor;
 
     public bool active;
+    public bool initState = false;
 
     void Start()
     {
         renderer = GetComponentInChildren<Renderer>();
+        light = GetComponentInChildren<Light>();
         material = renderer.material;
 
-        emissionColor = material.GetColor("_EmissionColor");
+        //emissionColor = material.GetColor("_EmissionColor");
+
+        //start with the active state
+        Activate(initState);
     }
 
 
@@ -25,20 +31,17 @@ public class LightManager : MonoBehaviour
  
     }
 
-    public void Activate(bool on, float intensity = 1f)
+    public void Activate(bool on, float intensity = 3f)
     {
         if (on && active == false)
         {
             active = true;
+            light.intensity = intensity;
             material.EnableKeyword("_EMISSION");
             material.globalIlluminationFlags = MaterialGlobalIlluminationFlags.RealtimeEmissive;
 
             material.SetColor("_EmissionColor", emissionColor * intensity);
-
-            RendererExtensions.UpdateGIMaterials(renderer);
-
             DynamicGI.SetEmissive(renderer, emissionColor * intensity);
-            DynamicGI.UpdateEnvironment();
 
             //ativa o estado global do cristal
             if (TryGetComponent(out BoltEntity crystalEntity))
@@ -58,16 +61,13 @@ public class LightManager : MonoBehaviour
         }
         else if(on == false && active == true)
         {
-
             active = false;
+            light.intensity = 0f;
             material.DisableKeyword("_EMISSION");
             material.globalIlluminationFlags = MaterialGlobalIlluminationFlags.EmissiveIsBlack;
 
             material.SetColor("_EmissionColor", Color.black);
-            RendererExtensions.UpdateGIMaterials(renderer);
-
             DynamicGI.SetEmissive(renderer, Color.black);
-            DynamicGI.UpdateEnvironment();
 
             //desativa o estado global do cristal
             if (TryGetComponent(out BoltEntity crystalEntity))

@@ -7,6 +7,8 @@ using UnityEngine;
 public class NetworksCallbacks : GlobalEventListener
 {
     public GameObject cubePrefab;
+    public GameObject endGameCanvasLight;
+    public GameObject endGameCanvasDark;
 
     public override void SceneLoadLocalDone(string scene, IProtocolToken token)
     {
@@ -17,9 +19,16 @@ public class NetworksCallbacks : GlobalEventListener
     public void Update()
     {
         //if game ended show screen of winner
-        if (GameState.Instance.state.GameFinished)
+        if (GameState.Instance != null && GameState.Instance.state.GameFinished)
         {
-
+            if (GameState.Instance.state.WinnerTeam == (int)GameState.Team.LIGHT)
+            {
+                endGameCanvasLight.SetActive(true);
+            }
+            else
+            {
+                endGameCanvasDark.SetActive(true);
+            }
         }
     }
 

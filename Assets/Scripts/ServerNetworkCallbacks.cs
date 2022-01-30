@@ -86,7 +86,7 @@ public class ServerNetworkCallbacks : GlobalEventListener
             var lightManager = entity.gameObject.GetComponent<LightManager>();
             if (lightManager != null)
             {
-                lightManager.initState = true;
+                lightManager.state.InitState = true;
             }
         }
 

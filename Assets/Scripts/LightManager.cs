@@ -10,8 +10,6 @@ public class LightManager : EntityBehaviour<ICrystalState>
     new Light light;
     public Color emissionColor;
 
-    public bool active;
-    public bool initState = false;
     public float defaultIntensity = 3f;
 
     public override void Attached()
@@ -21,20 +19,22 @@ public class LightManager : EntityBehaviour<ICrystalState>
         material = renderer.material;
 
         //emissionColor = material.GetColor("_EmissionColor");
+    }
 
+    private void Start()
+    {
         //start with the active state
-        Activate(initState);
+        Activate(state.InitState);
     }
 
     public void Activate(bool on)
     {
         if (on && state.IsActive == false)
         {
-            active = true;
             ActivateMaterial(on, defaultIntensity);
 
             //ativa o estado global do cristal
-            state.IsActive = active;
+            state.IsActive = true;
 
             //se entrar aqui é por que o player esta próximo de um crystal e ativou ele
             var crystalEvent = CrystalHit.Create(GlobalTargets.Everyone, ReliabilityModes.ReliableOrdered);
@@ -44,11 +44,10 @@ public class LightManager : EntityBehaviour<ICrystalState>
         }
         else if(on == false && state.IsActive == true)
         {
-            active = false;
             ActivateMaterial(on, defaultIntensity);
 
             //desativa o estado global do cristal
-            state.IsActive = active;
+            state.IsActive = false;
 
             //se entrar aqui é por que o player esta próximo de um crystal e ativou ele
             var crystalEvent = CrystalHit.Create(GlobalTargets.Everyone, ReliabilityModes.ReliableOrdered);

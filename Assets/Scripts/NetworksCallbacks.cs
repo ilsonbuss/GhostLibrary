@@ -13,4 +13,26 @@ public class NetworksCallbacks : GlobalEventListener
         var spawnPos = new Vector3(Random.Range(-8, 8), 0, Random.Range(-8, 8));
         BoltNetwork.Instantiate(cubePrefab, spawnPos, Quaternion.identity);
     }
+
+    public override void OnEvent(PlayerEnter e)
+    {
+        var lightGhost = e.Player.gameObject.transform.Find("LightGhost").gameObject;
+        var darkGhost = e.Player.gameObject.transform.Find("DarkGhost").gameObject;
+        if(e.Dark)
+        {
+            Debug.Log("Destroy lite!" + lightGhost.tag + " _  local: " + e.Player.IsOwner);
+            Destroy(lightGhost);
+            darkGhost.SetActive(true);
+        }
+        else
+        {
+            Debug.Log("Destroy dark! " + darkGhost.tag + " _ " + " _  local: " + e.Player.IsOwner);
+            Destroy(darkGhost);
+            lightGhost.SetActive(true);
+        }
+
+        //GameState.Instance.ServerSpawnPlayer(e.Player, e.Dark);
+        //Debug.LogWarning("PlayerEnter " + e.Nickname + " Dark: " + e.Dark);
+    }
+
 }

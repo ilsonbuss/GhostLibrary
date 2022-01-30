@@ -129,22 +129,30 @@ public class GameState : EntityBehaviour<IGameState>
         }
     }
 
-    public void ServerRemovePlayer(BoltEntity player)
+    public void ServerRemovePlayer(bool dark)
     {
-        for (var i = 0; i < state.DarkPlayers.Length; i++)
+        if (dark)
         {
-            if (state.DarkPlayers[i] == player)
-            {
-                state.DarkPlayers[i] = player;
-            }
-        }
-        for (var i = 0; i < state.LightPlayers.Length; i++)
+            state.TeamBalanceCount += 1;
+        } 
+        else
         {
-            if (state.LightPlayers[i] == player)
-            {
-                state.LightPlayers[i] = player;
-            }
+            state.TeamBalanceCount -= 1;
         }
+        //for (var i = 0; i < state.DarkPlayers.Length; i++)
+        //{
+        //    if (state.DarkPlayers[i] == player)
+        //    {
+        //        state.DarkPlayers[i] = player;
+        //    }
+        //}
+        //for (var i = 0; i < state.LightPlayers.Length; i++)
+        //{
+        //    if (state.LightPlayers[i] == player)
+        //    {
+        //        state.LightPlayers[i] = player;
+        //    }
+        //}
     }
 
 

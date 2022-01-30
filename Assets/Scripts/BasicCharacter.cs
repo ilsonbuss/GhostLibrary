@@ -38,7 +38,6 @@ public class BasicCharacter : EntityBehaviour<ICustomStatePlayer>
     public override void Attached()
     {
         state.SetTransforms(state.CustomCubeTransform, transform);
-
         state.SetAnimator(animator);
 
         if(entity.IsOwner == false)
@@ -68,7 +67,38 @@ public class BasicCharacter : EntityBehaviour<ICustomStatePlayer>
         dark = GameState.Instance.IsNextPlayerDark();
         state.Dark = dark;
         state.Nickname = "Ghost #" + (GameState.Instance.state.NextPlayerId+1);
-        //Debug.LogWarning("Enter " + GameState.Instance.state.NextPlayerId  + " Dark " + state.Dark);
+        Debug.LogWarning("Enter " + GameState.Instance.state.NextPlayerId  + " Dark " + state.Dark);
+        Respawn();
+
+        PlayerEnter enter = PlayerEnter.Create(GlobalTargets.Everyone);
+        enter.Player = entity;
+        enter.Dark = state.Dark;
+        enter.Nickname = state.Nickname;
+        enter.Send();
+
+        if(dark)
+        {
+            ghost = gameObject.transform.Find("DarkGhost").gameObject;
+            Debug.LogWarning("Enter " + ghost.tag);
+        }
+        else
+        {
+            ghost = gameObject.transform.Find("LightGhost").gameObject;
+            Debug.LogWarning("Enter " + ghost.tag);
+        }
+    }
+
+
+    public void Leave()
+    {
+        //if (Left) return;
+        //PlayerLeave left = PlayerLeave.Create(GlobalTargets.Everyone);
+        //left.Dark = dark;
+        //left.Send();
+    }
+
+    public void Respawn()
+    {
         if (state.Dark)
         {
             transform.position = darkTeamSpawnCenter;
@@ -78,21 +108,6 @@ public class BasicCharacter : EntityBehaviour<ICustomStatePlayer>
             transform.position = lightTeamSpawnCenter;
         }
         transform.position += new Vector3(UnityEngine.Random.Range(-teamSpawnRadius, teamSpawnRadius), 0.0f, UnityEngine.Random.Range(-teamSpawnRadius, teamSpawnRadius));
-
-        PlayerEnter enter = PlayerEnter.Create(GlobalTargets.Everyone);
-        enter.Player = entity;
-        enter.Dark = state.Dark;
-        enter.Nickname = state.Nickname;
-        enter.Send();
-    }
-
-
-    public void Leave()
-    {
-        if (Left) return;
-        PlayerLeave left = PlayerLeave.Create(GlobalTargets.Everyone);
-        left.player = entity;
-        left.Send();
     }
 
     //similar to Update

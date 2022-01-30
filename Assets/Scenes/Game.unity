@@ -2094,6 +2094,14 @@ PrefabInstance:
       propertyPath: endGameCanvasLight
       value: 
       objectReference: {fileID: 4490247796314851445}
+    - target: {fileID: 4946631126703804382, guid: 459e3ed65ed949c49a0a16417f557051, type: 3}
+      propertyPath: lobbyScene.sceneName
+      value: LobbyManager/Scenes/PhotonLobby
+      objectReference: {fileID: 0}
+    - target: {fileID: 4946631126703804382, guid: 459e3ed65ed949c49a0a16417f557051, type: 3}
+      propertyPath: lobbyScene.sceneAsset
+      value: 
+      objectReference: {fileID: 102900000, guid: 42d6ac873a5b84d439478f72d40c21ce, type: 3}
     - target: {fileID: 4946631126703804383, guid: 459e3ed65ed949c49a0a16417f557051, type: 3}
       propertyPath: m_RootOrder
       value: 3

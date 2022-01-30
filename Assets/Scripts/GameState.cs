@@ -25,7 +25,7 @@ public class GameState : EntityBehaviour<IGameState>
     {
         if(entity.IsOwner)
         {
-            MaxGameTime = 7f;
+            MaxGameTime = 60f;
             state.GameStarted = true;
             state.TotalCrystals = 20;
             state.AttackCooldown = 0.8f;

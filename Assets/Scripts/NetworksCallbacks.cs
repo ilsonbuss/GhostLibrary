@@ -1,3 +1,4 @@
+using Bolt.Samples.Photon.Lobby.Utilities;
 using Photon.Bolt;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,8 +12,11 @@ public class NetworksCallbacks : GlobalEventListener
     public GameObject cubePrefab;
     public GameObject endGameCanvasLight;
     public GameObject endGameCanvasDark;
+    [SerializeField] private SceneField lobbyScene;
+
     private bool waitEndState;
     private VideoPlayer endGameVideoPlayer;
+    
 
     public override void SceneLoadLocalDone(string scene, IProtocolToken token)
     {
@@ -54,7 +58,7 @@ public class NetworksCallbacks : GlobalEventListener
 
         //we need to wait a bit more than "usual" because the video flag is setted
         //1 or 2 seconds before the screen is actually updated
-        yield return new WaitForSeconds(7);
+        yield return new WaitForSeconds(8);
 
         EndGameSwitchScene();
     }
@@ -65,7 +69,7 @@ public class NetworksCallbacks : GlobalEventListener
         //then we should return to lobby
         if (waitEndState && GameState.Instance.state.GameFinished)
         {
-            SceneManager.LoadScene("PhotonLobby", LoadSceneMode.Single);
+            SceneManager.LoadScene(lobbyScene.SimpleSceneName);
         }
     }
 

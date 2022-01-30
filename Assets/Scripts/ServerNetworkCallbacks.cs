@@ -69,42 +69,4 @@ public class ServerNetworkCallbacks : GlobalEventListener
         GameState.Instance.ServerComputeLight(e.HitState);
     }
 
-
-    public void SpawnLights()
-    {
-        //Debug.Log("Spawning Lights --------------------------------------------------------------");
-
-        var LightSpawners = GameObject.FindGameObjectsWithTag("LightSpawnerMarker");
-        var positions = LightSpawners.Select(l => new
-        {
-            randomOrder = Random.Range(0, LightSpawners.Length),
-            position = l.transform.position
-        }).OrderBy(a => a.randomOrder)
-          .Take(6)
-          .Select(a => a.position);
-
-
-        //spawn active crystals
-        foreach (var position in positions.Take(3))
-        {
-            var entity = BoltNetwork.Instantiate(BoltPrefabs.Crystal, position, Quaternion.identity);
-            var lightManager = entity.gameObject.GetComponent<LightManager>();
-            if (lightManager != null)
-            {
-                lightManager.SetInitState(true);
-            }
-        }
-
-        //spawn black crystals
-        foreach (var position in positions.Skip(3))
-        {
-            var entity = BoltNetwork.Instantiate(BoltPrefabs.Crystal, position, Quaternion.identity);
-            var lightManager = entity.gameObject.GetComponent<LightManager>();
-            if (lightManager != null)
-            {
-                lightManager.SetInitState(false);
-            }
-        }
-
-    }
 }

@@ -118,6 +118,13 @@ public class BasicCharacter : EntityBehaviour<ICustomStatePlayer>
     //similar to Update
     public override void SimulateOwner()
     {
+        //block input after end game
+        if (GameState.Instance.state.GameFinished)
+        {
+            return;
+        }
+
+
         // Vertical
         float inputY = 0;
         if (Input.GetKey(KeyCode.UpArrow))

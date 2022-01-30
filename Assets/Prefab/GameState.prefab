@@ -44,6 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a08b6d51ad0644646b93a72a8d38fe99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GameStartTime: 0
+  MaxGameTime: 60
 --- !u!114 &-3027275791833962666
 MonoBehaviour:
   m_ObjectHideFlags: 0

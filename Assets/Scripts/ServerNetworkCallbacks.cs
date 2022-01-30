@@ -29,6 +29,20 @@ public class ServerNetworkCallbacks : GlobalEventListener
         SpawnLights();
     }
 
+    //update routine on server
+    public void Update()
+    {
+        if (GameState.Instance != null &&
+            (BoltNetwork.ServerTime - GameState.Instance.GameStartTime >= GameState.Instance.MaxGameTime) &&
+            GameState.Instance.state.GameFinished == false)
+        {
+            GameState.Instance.EndGame();
+        }
+    }
+
+
+
+
     public override void OnEvent(PlayerEnter e)
     {
         GameState.Instance.ServerSpawnPlayer(e.Player, e.Dark);

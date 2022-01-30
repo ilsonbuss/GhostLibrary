@@ -7,11 +7,29 @@ using UnityEngine;
 public class NetworksCallbacks : GlobalEventListener
 {
     public GameObject cubePrefab;
+    public GameObject endGameCanvasLight;
+    public GameObject endGameCanvasDark;
 
     public override void SceneLoadLocalDone(string scene, IProtocolToken token)
     {
         var spawnPos = new Vector3(Random.Range(-8, 8), 0, Random.Range(-8, 8));
         BoltNetwork.Instantiate(cubePrefab, spawnPos, Quaternion.identity);
+    }
+
+    public void Update()
+    {
+        //if game ended show screen of winner
+        if (GameState.Instance != null && GameState.Instance.state.GameFinished)
+        {
+            if (GameState.Instance.state.WinnerTeam == (int)GameState.Team.LIGHT)
+            {
+                endGameCanvasLight.SetActive(true);
+            }
+            else
+            {
+                endGameCanvasDark.SetActive(true);
+            }
+        }
     }
 
     public override void OnEvent(PlayerEnter e)

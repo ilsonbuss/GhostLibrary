@@ -21,8 +21,11 @@ public class PlayerAtackAnimator : MonoBehaviour
         //if (Input.GetMouseButtonDown(0))
         {
             animator.SetTrigger("AtackTrigger");
-            AudioAtack.gameObject.SetActive(true);
-            AudioAtack.Play();
+            if (AudioAtack != null && AudioAtack.gameObject != null)
+            {
+                AudioAtack.gameObject.SetActive(true);
+                AudioAtack.Play();
+            }
         }
     }
 }

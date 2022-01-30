@@ -282,6 +282,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2712238712913000323}
   - component: {fileID: 2461630338897160202}
+  - component: {fileID: 8175562607867630539}
   m_Layer: 0
   m_Name: Personagem_Dark_Idle-movimento
   m_TagString: Untagged
@@ -325,6 +326,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &8175562607867630539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3379984582455438649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 374b1f11678efde469219614cf03e62e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3577539482001458600
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,8 +6,11 @@ public class BasicCharacter : EntityBehaviour<ICustomStatePlayer>
 
     public static BasicCharacter Local;
 
+    public Vector3 lightTeamSpawnCenter = new Vector3(0.0f, 0.0f, 6.0f);
+    public float teamSpawnRadius = 1.0f;
+    public Vector3 darkTeamSpawnCenter = new Vector3(0.0f, 0.0f, -6.0f);
 
-    private static readonly int WALK_PROPERTY = Animator.StringToHash("Walk");
+    //private static readonly int WALK_PROPERTY = Animator.StringToHash("Walk");
 
     public Camera Camera;
 
@@ -33,19 +36,18 @@ public class BasicCharacter : EntityBehaviour<ICustomStatePlayer>
     public override void Attached()
     {
         state.SetTransforms(state.CustomCubeTransform, transform);
-
         state.SetAnimator(animator);
 
         if(entity.IsOwner == false)
         {
             //Debug.LogWarning("Destroy!!!");
             //GetComponentInChildren<AudioListener>().enabled = false;
-            GetComponentInChildren<Camera>().enabled = false;
+            //GetComponentInChildren<Camera>().enabled = false;
         }
         else
         {
             Local = this;
-            if(!Entered && GameState.Instance != null)
+            if(!Entered && GameState.Instance != null && GameState.Instance.IsReady())
             {
                 Enter();
             }
@@ -54,26 +56,56 @@ public class BasicCharacter : EntityBehaviour<ICustomStatePlayer>
         //Debug.LogWarning("transform: " + transform.position + " is Owner " + entity.IsOwner);
     }
 
+    private bool dark = false;
+
     public void Enter()
     {
         if (Entered) return;
         Entered = true;
-        state.Dark = GameState.Instance.IsNextPlayerDark();
+        dark = GameState.Instance.IsNextPlayerDark();
+        state.Dark = dark;
         state.Nickname = "Ghost #" + (GameState.Instance.state.NextPlayerId+1);
+        Debug.LogWarning("Enter " + GameState.Instance.state.NextPlayerId  + " Dark " + state.Dark);
+        Respawn();
+
         PlayerEnter enter = PlayerEnter.Create(GlobalTargets.Everyone);
         enter.Player = entity;
         enter.Dark = state.Dark;
         enter.Nickname = state.Nickname;
         enter.Send();
+
+        if(dark)
+        {
+            ghost = gameObject.transform.Find("DarkGhost").gameObject;
+            Debug.LogWarning("Enter " + ghost.tag);
+        }
+        else
+        {
+            ghost = gameObject.transform.Find("LightGhost").gameObject;
+            Debug.LogWarning("Enter " + ghost.tag);
+        }
     }
 
 
     public void Leave()
     {
-        if (Left) return;
-        PlayerLeave left = PlayerLeave.Create(GlobalTargets.Everyone);
-        left.player = entity;
-        left.Send();
+        //if (Left) return;
+        //PlayerLeave left = PlayerLeave.Create(GlobalTargets.Everyone);
+        //left.Dark = dark;
+        //left.Send();
+    }
+
+    public void Respawn()
+    {
+        if (state.Dark)
+        {
+            transform.position = darkTeamSpawnCenter;
+        }
+        else
+        {
+            transform.position = lightTeamSpawnCenter;
+        }
+        transform.position += new Vector3(UnityEngine.Random.Range(-teamSpawnRadius, teamSpawnRadius), 0.0f, UnityEngine.Random.Range(-teamSpawnRadius, teamSpawnRadius));
     }
 
     //similar to Update

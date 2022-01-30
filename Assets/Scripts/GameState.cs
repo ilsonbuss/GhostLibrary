@@ -22,8 +22,11 @@ public class GameState : EntityBehaviour<IGameState>
             state.GameDuration = 60.0f;
             state.TotalCrystals = 20;
             state.AttackCooldown = 0.8f;
+            Ready1 = true; Ready2 = true;
         }
 
+        state.AddCallback("NextPlayerId", OnUpdateNextPlayerId);
+        state.AddCallback("TeamBalanceCount", OnUpdateTeamBalanceCount);
 
         //var e = PlayerEnter.Create();
         //e.Dark = dark;
@@ -34,15 +37,40 @@ public class GameState : EntityBehaviour<IGameState>
         //Debug.LogWarning("GameState criado! IsServer " + BoltNetwork.IsServer + " IsOwner " + entity.IsOwner + " TotalCrystal " + state.TotalCrystals);
     }
 
-    private void Start()
+    private bool Ready1;
+    private bool Ready2;
+    public bool IsReady()
     {
-        if (BasicCharacter.Local != null && BasicCharacter.Local.Entered == false)
+        return Ready1 && Ready2;
+    }
+
+    public void OnUpdateNextPlayerId()
+    {
+        Ready1 = true;
+        //Debug.LogWarning("Update next player id!!!" + state.NextPlayerId);
+        if (BasicCharacter.Local != null && BasicCharacter.Local.Entered == false && IsReady())
         {
             BasicCharacter.Local.Enter();
         }
+    }
+
+    public void OnUpdateTeamBalanceCount()
+    {
+        Ready2 = true;
+        //Debug.LogWarning("Update TeamBalanceCount!!!" + state.TeamBalanceCount);
+        if (BasicCharacter.Local != null && BasicCharacter.Local.Entered == false && IsReady())
+        {
+            BasicCharacter.Local.Enter();
+        }
+    }
+
+    private void Start()
+    {
 
         //Debug.LogWarning("GameState Start! IsServer " + BoltNetwork.IsServer + " IsOwner " + entity.IsOwner + " TotalCrystal " + state.TotalCrystals);
     }
+
+  
 
 
     //private int NextPlayerId = 1;
@@ -71,7 +99,7 @@ public class GameState : EntityBehaviour<IGameState>
 
     public bool IsNextPlayerDark()
     {
-        return CountDarkPlayers() < CountLightPlayers();
+        return state.TeamBalanceCount > 0;
     }
     public void ServerSpawnPlayer(BoltEntity playerEntity, bool dark)
     {
@@ -79,7 +107,8 @@ public class GameState : EntityBehaviour<IGameState>
         state.NextPlayerId += 1;
         if (dark)
         {
-            for(var i = 0; i < state.DarkPlayers.Length; i++)
+            state.TeamBalanceCount -= 1;
+            for (var i = 0; i < state.DarkPlayers.Length; i++)
             {
                 if(state.DarkPlayers[i] == null)
                 {
@@ -89,6 +118,7 @@ public class GameState : EntityBehaviour<IGameState>
         }
         else
         {
+            state.TeamBalanceCount += 1;
             for (var i = 0; i < state.LightPlayers.Length; i++)
             {
                 if (state.LightPlayers[i] == null)
@@ -99,22 +129,30 @@ public class GameState : EntityBehaviour<IGameState>
         }
     }
 
-    public void ServerRemovePlayer(BoltEntity player)
+    public void ServerRemovePlayer(bool dark)
     {
-        for (var i = 0; i < state.DarkPlayers.Length; i++)
+        if (dark)
         {
-            if (state.DarkPlayers[i] == player)
-            {
-                state.DarkPlayers[i] = player;
-            }
-        }
-        for (var i = 0; i < state.LightPlayers.Length; i++)
+            state.TeamBalanceCount += 1;
+        } 
+        else
         {
-            if (state.LightPlayers[i] == player)
-            {
-                state.LightPlayers[i] = player;
-            }
+            state.TeamBalanceCount -= 1;
         }
+        //for (var i = 0; i < state.DarkPlayers.Length; i++)
+        //{
+        //    if (state.DarkPlayers[i] == player)
+        //    {
+        //        state.DarkPlayers[i] = player;
+        //    }
+        //}
+        //for (var i = 0; i < state.LightPlayers.Length; i++)
+        //{
+        //    if (state.LightPlayers[i] == player)
+        //    {
+        //        state.LightPlayers[i] = player;
+        //    }
+        //}
     }
 
 

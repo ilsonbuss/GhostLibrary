@@ -95,8 +95,12 @@ namespace Bolt.Samples.Photon.Lobby
             
             object region;
             BoltMatchmaking.CurrentMetadata.TryGetValue("region", out region);
+
+            if (region != null)
+            {
+                uiTopPanel.SetHeaderInfo("Host", "self", ((string)region).ToUpper());
+            }
             
-            uiTopPanel.SetHeaderInfo("Host", "self", ((string) region).ToUpper());
             
             ChangeBodyTo(uiRoom);
         }
@@ -115,8 +119,12 @@ namespace Bolt.Samples.Photon.Lobby
             
             object region;
             BoltMatchmaking.CurrentMetadata.TryGetValue("region", out region);
+
+            if (region != null)
+            {
+                uiTopPanel.SetHeaderInfo("Client", BoltMatchmaking.CurrentSession.HostName, ((string)region).ToUpper());
+            }
             
-            uiTopPanel.SetHeaderInfo("Client", BoltMatchmaking.CurrentSession.HostName, ((string) region).ToUpper());
             
             ChangeBodyTo(uiRoom);
         }

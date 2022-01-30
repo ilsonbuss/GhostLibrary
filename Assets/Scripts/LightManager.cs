@@ -19,12 +19,6 @@ public class LightManager : EntityBehaviour<ICrystalState>
         state.AddCallback("IsActive", ActivateCallBack);
     }
 
-    //private void Start()
-    //{
-    //    //start with the active state
-    //    ActivateMaterial(isActiveLocal, defaultIntensity);
-    //}
-
     public void SetInitState(bool stateFlag)
     {
         isActiveLocal = stateFlag;
@@ -70,35 +64,40 @@ public class LightManager : EntityBehaviour<ICrystalState>
         }
     }
 
-    //public void AcativateOnly(bool shouldActivate)
-    //{
-    //    Debug.LogWarning($"Cristal Via evento - Acao: {shouldActivate} | State: {state.IsActive}");
-
-    //    ActivateMaterial(shouldActivate, defaultIntensity);
-    //}
-
     private void ActivateMaterial(bool shouldActivate, float intensity)
     {
         var light = GetComponentInChildren<Light>();
-        var material = GetComponentInChildren<Renderer>().material;
+        //var material = GetComponentInChildren<Renderer>().material;
+
+        var cristal = gameObject.transform.Find("cristal");
+        var cristal_black = gameObject.transform.Find("cristal_black");
 
         if (shouldActivate)
         {
             light.intensity = intensity;
-            material.EnableKeyword("_EMISSION");
-            material.globalIlluminationFlags = MaterialGlobalIlluminationFlags.RealtimeEmissive;
 
-            material.SetColor("_EmissionColor", emissionColor * intensity);
-            DynamicGI.SetEmissive(GetComponent<Renderer>(), emissionColor * intensity);
+            cristal.gameObject.SetActive(true);
+            cristal_black.gameObject.SetActive(false);
+
+            //material.EnableKeyword("_EMISSION");
+            //material.globalIlluminationFlags = MaterialGlobalIlluminationFlags.RealtimeEmissive;
+
+            //material.SetColor("_EmissionColor", emissionColor * intensity);
+            //DynamicGI.SetEmissive(GetComponent<Renderer>(), emissionColor * intensity);
         }
         else
         {
             light.intensity = 0f;
-            material.DisableKeyword("_EMISSION");
-            material.globalIlluminationFlags = MaterialGlobalIlluminationFlags.EmissiveIsBlack;
 
-            material.SetColor("_EmissionColor", Color.black);
-            DynamicGI.SetEmissive(GetComponent<Renderer>(), Color.black);
+            cristal.gameObject.SetActive(false);
+            cristal_black.gameObject.SetActive(true);
+
+
+            //material.DisableKeyword("_EMISSION");
+            //material.globalIlluminationFlags = MaterialGlobalIlluminationFlags.EmissiveIsBlack;
+
+            //material.SetColor("_EmissionColor", Color.black);
+            //DynamicGI.SetEmissive(GetComponent<Renderer>(), Color.black);
         }
     }
 

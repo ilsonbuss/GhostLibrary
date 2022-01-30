@@ -6,8 +6,8 @@ public class ScrollCredit : MonoBehaviour
 {
    
     public float scrollSpeed;
-    public GameObject textToScroll;    // Start is called before the first frame update
-    public GameObject textArea;
+    public GameObject scrollPanel;    // Start is called before the first frame update
+    public GameObject MaskArea;
     
     public void Start()
     {
@@ -17,15 +17,15 @@ public class ScrollCredit : MonoBehaviour
 
     public void Update()
     {
-        if (textToScroll.transform.position.y < 50.0)
-        {
-            textToScroll.transform.Translate((Vector3.up * (scrollSpeed * Time.deltaTime)));         
+        if (scrollPanel.transform.position.y < 70.0)
+        {            
+            scrollPanel.transform.Translate((Vector3.up * (scrollSpeed * Time.deltaTime)));         
         }
         
     }
 
     public void ReniciarScroll()
     {
-        textToScroll.transform.position = new Vector3(textToScroll.transform.position.x, -120, textToScroll.transform.position.z);
+        scrollPanel.transform.position = new Vector3(scrollPanel.transform.position.x, -100, scrollPanel.transform.position.z);
     }
 }

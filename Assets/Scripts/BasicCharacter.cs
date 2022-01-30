@@ -27,6 +27,8 @@ public class BasicCharacter : EntityBehaviour<ICustomStatePlayer>
     [SerializeField]
     private GameObject ghost = null;
 
+    private GameObject nearCrystal = null;
+
     private Vector3 _movement;
 
     public bool Entered { get; set; }
@@ -122,6 +124,24 @@ public class BasicCharacter : EntityBehaviour<ICustomStatePlayer>
             ghost.transform.eulerAngles = new Vector3(ghost.transform.rotation.x, 235, ghost.transform.rotation.z);
         }
 
+        if (Input.GetKey(KeyCode.Space))
+        {
+            if (state.IsNearCrystal && nearCrystal != null)
+            {
+                //se entrar aqui é por que o player esta próximo de um crystal e ativou ele
+                var crystalEvent = CrystalHit.Create(GlobalTargets.Everyone, ReliabilityModes.ReliableOrdered);
+                crystalEvent.isTeamDark = state.Dark; //a variavel Dark indica o time
+                crystalEvent.Send(); //avisa o servidor e demais players para registrar o evento de hit do cristal
+
+                //ativa o cristal
+                if (nearCrystal.TryGetComponent(out LightManager lightManager))
+                {
+                    lightManager.Activate(true);
+                }
+            }
+        }
+
+
         // Normalize
         _movement = new Vector3(inputX, 0, inputY).normalized;
         physicsBody.velocity = (_movement * speed) * 4;
@@ -137,6 +157,27 @@ public class BasicCharacter : EntityBehaviour<ICustomStatePlayer>
         if (entity.IsAttached)
         {
             //state.Animator.SetBool(WALK_PROPERTY, state.IsMoving);
+        }
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+
+        //check if is crystal collision
+        if (other.TryGetComponent(out LightManager component))
+        {
+            //set player state to near crystal
+            state.IsNearCrystal = true;
+            nearCrystal = other.gameObject;
+        }
+    }
+
+    public void OnTriggerExit(Collider other)
+    {
+        //check if is crystal collision
+        if (other.TryGetComponent(typeof(LightManager), out Component component))
+        {
+            state.IsNearCrystal = false;
         }
     }
 

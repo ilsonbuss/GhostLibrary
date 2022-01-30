@@ -1,3 +1,4 @@
+using Photon.Bolt;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +11,8 @@ public class LightManager : MonoBehaviour
     
     public bool active;
 
-    void Start() {
+    void Start() 
+    {
         renderer = GetComponentInChildren<Renderer>();
         material = renderer.material;
 
@@ -18,12 +20,15 @@ public class LightManager : MonoBehaviour
     }
 
 
-    void Update() {
+    void Update() 
+    {
         Activate(active);
     }
 
-    public void Activate(bool on, float intensity = 1f) {
-        if (on) {
+    public void Activate(bool on, float intensity = 1f)
+    {
+        if (on) 
+        {
             material.EnableKeyword("_EMISSION");
             material.globalIlluminationFlags = MaterialGlobalIlluminationFlags.RealtimeEmissive;
 
@@ -34,7 +39,18 @@ public class LightManager : MonoBehaviour
             DynamicGI.SetEmissive(renderer, emissionColor * intensity);
             DynamicGI.UpdateEnvironment();
 
-        } else {
+            //ativa o estado global do cristal
+            if (TryGetComponent(out BoltEntity crystalEntity))
+            {
+                if (crystalEntity is ICrystalState)
+                {
+                    (crystalEntity as ICrystalState).IsActive = true;
+                }
+            }
+
+        } 
+        else
+        {
 
             material.DisableKeyword("_EMISSION");
             material.globalIlluminationFlags = MaterialGlobalIlluminationFlags.EmissiveIsBlack;
@@ -45,6 +61,15 @@ public class LightManager : MonoBehaviour
             DynamicGI.SetEmissive(renderer, Color.black);
             DynamicGI.UpdateEnvironment();
 
+
+            //ativa o estado global do cristal
+            if (TryGetComponent(out BoltEntity crystalEntity))
+            {
+                if (crystalEntity is ICrystalState)
+                {
+                    (crystalEntity as ICrystalState).IsActive = false;
+                }
+            }
         }
     }
 }

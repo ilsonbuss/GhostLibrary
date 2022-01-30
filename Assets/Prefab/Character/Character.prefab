@@ -145,6 +145,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ead55584d9ddae84bb1785c05a0ab1b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lightTeamSpawnCenter: {x: 0, y: 0, z: 6}
+  teamSpawnRadius: 1
+  darkTeamSpawnCenter: {x: 0, y: 0, z: -6}
   Camera: {fileID: 7299349453643647594}
   speed: 1
   animator: {fileID: 2945626728228135410}

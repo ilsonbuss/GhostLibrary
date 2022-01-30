@@ -154,7 +154,7 @@ public class BasicCharacter : EntityBehaviour<ICustomStatePlayer>
             inputX = -1;
             targetMoveAngle = 235;
         }
-        
+
         if (inputX != 0.0 || inputY != 0.0)
         {
             var old = targetMoveAngle;
@@ -178,7 +178,7 @@ public class BasicCharacter : EntityBehaviour<ICustomStatePlayer>
                 {
                     //se for time DARK, desativa
                     //se forma time Light, ativa
-                     lightManager.Activate(state.Dark);
+                    lightManager.Activate(!state.Dark);
                 }
             }
         }

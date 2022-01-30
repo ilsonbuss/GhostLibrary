@@ -98,6 +98,12 @@ public class NetworksCallbacks : GlobalEventListener
         //GameState.Instance.ServerSpawnPlayer(e.Player, e.Dark);
         //Debug.LogWarning("PlayerEnter " + e.Nickname + " Dark: " + e.Dark);
     }
-
+    public override void OnEvent(CrystalHit e)
+    {
+        if (e != null && e.CrystalInstance.gameObject.TryGetComponent(out LightManager lightManager))
+        {
+            lightManager.ActivateCallBack(e.HitState);
+        }
+    }
 
 }

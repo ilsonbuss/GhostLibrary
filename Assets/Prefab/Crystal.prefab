@@ -388,6 +388,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   emissionColor: {r: 0.080322154, g: 0.7387784, b: 0.8962264, a: 0}
   active: 0
+  initState: 0
 --- !u!114 &7516897387628067577
 MonoBehaviour:
   m_ObjectHideFlags: 0

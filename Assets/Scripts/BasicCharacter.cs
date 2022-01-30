@@ -44,8 +44,8 @@ public class BasicCharacter : EntityBehaviour<ICustomStatePlayer>
         if (entity.IsOwner == false)
         {
             //Debug.LogWarning("Destroy!!!");
-            GetComponentInChildren<AudioListener>().enabled = false;
-            GetComponentInChildren<Camera>().enabled = false;
+            //GetComponentInChildren<AudioListener>().enabled = false;
+            //GetComponentInChildren<Camera>().enabled = false;
         }
         else
         {
@@ -123,7 +123,7 @@ public class BasicCharacter : EntityBehaviour<ICustomStatePlayer>
     public override void SimulateOwner()
     {
         //block input after end game
-        if (GameState.Instance.state.GameFinished)
+        if (GameState.Instance != null && GameState.Instance.state.GameFinished)
         {
             return;
         }

@@ -77,15 +77,11 @@ public class BasicCharacter : EntityBehaviour<ICustomStatePlayer>
 
 
         //yield on a new YieldInstruction that waits for 5 seconds.
-        yield return new WaitForSeconds(Random.Range(0.5f, 3.5f));
+        yield return new WaitForSeconds(2.5f);
 
-        Debug.LogError((int)entity.NetworkId.PackedValue);
+        //Debug.LogError((int)entity.NetworkId.PackedValue);
 
-        dark = ((int)entity.NetworkId.PackedValue) % 2 == 0; //GameState.Instance.IsNextPlayerDark(); ////Random.Range(0, 2) == 0; //GameState.Instance.IsNextPlayerDark();
-        state.Dark = dark;
-        state.Nickname = "Ghost #" + (GameState.Instance.state.NextPlayerId + 1);
-        //Debug.LogWarning("Enter " + GameState.Instance.state.NextPlayerId  + " Dark " + state.Dark);
-        Respawn();
+
 
         //Random.seed = (int)System.DateTime.Now.Ticks;
 
@@ -103,7 +99,11 @@ public class BasicCharacter : EntityBehaviour<ICustomStatePlayer>
         Entered = true;
         //Debug.Log("Dark: " + Random.Range(0, 1) + Random.Range(0, 1) + Random.Range(0, 1) + Random.Range(0, 1) + Random.Range(0, 1));
 
-
+        dark = ((int)entity.NetworkId.PackedValue) % 2 == 0; //GameState.Instance.IsNextPlayerDark(); ////Random.Range(0, 2) == 0; //GameState.Instance.IsNextPlayerDark();
+        state.Dark = dark;
+        state.Nickname = "Ghost #" + (GameState.Instance.state.NextPlayerId + 1);
+        //Debug.LogWarning("Enter " + GameState.Instance.state.NextPlayerId  + " Dark " + state.Dark);
+        Respawn();
 
         var controller = entity.Controller;
 

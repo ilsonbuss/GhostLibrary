@@ -29,10 +29,11 @@ public class ServerNetworkCallbacks : GlobalEventListener
         SpawnLights();
     }
 
-    //update routine on servre
+    //update routine on server
     public void Update()
     {
-        if ((BoltNetwork.ServerTime - GameState.Instance.GameStartTime >= GameState.Instance.MaxGameTime) &&
+        if (GameState.Instance != null &&
+            (BoltNetwork.ServerTime - GameState.Instance.GameStartTime >= GameState.Instance.MaxGameTime) &&
             GameState.Instance.state.GameFinished == false)
         {
             GameState.Instance.EndGame();

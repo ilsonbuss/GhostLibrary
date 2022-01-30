@@ -12,14 +12,21 @@ public class GameState : EntityBehaviour<IGameState>
     private void Awake()
     {
         Instance = this;
+        GameStartTime = BoltNetwork.ServerTime; //guarda o tempo da sessão quando o jogo iniciou
+
     }
     #endregion
+
+    public float GameStartTime;
+    public float MaxGameTime;
+    public enum Team { NONE, LIGHT, DARK }
 
     public override void Attached()
     {
         if(entity.IsOwner)
         {
-            state.GameDuration = 60.0f;
+            MaxGameTime = 60f;
+            state.GameStarted = true;
             state.TotalCrystals = 20;
             state.AttackCooldown = 0.8f;
             Ready1 = true; Ready2 = true;
@@ -63,20 +70,6 @@ public class GameState : EntityBehaviour<IGameState>
             BasicCharacter.Local.Enter();
         }
     }
-
-    private void Start()
-    {
-
-        //Debug.LogWarning("GameState Start! IsServer " + BoltNetwork.IsServer + " IsOwner " + entity.IsOwner + " TotalCrystal " + state.TotalCrystals);
-    }
-
-  
-
-
-    //private int NextPlayerId = 1;
-    //private Dictionary<BoltEntity, ICustomStatePlayer> lookupTable = new Dictionary<string, Action>();
-
-
 
     public int CountDarkPlayers()
     {
@@ -155,5 +148,35 @@ public class GameState : EntityBehaviour<IGameState>
         //}
     }
 
+    /// <summary>
+    /// Finaliza o jogo pois o tempo acabou
+    /// </summary>
+    public void EndGame()
+    {
+        state.GameFinished = true;
+
+        //verifica vencedor
+        if ((state.TotalCrystals - state.LightsOn) > state.LightsOn)
+        {
+            state.WinnerTeam = (int)Team.DARK;
+        }
+        else
+        {
+            state.WinnerTeam = (int)Team.LIGHT;
+        }
+    }
+
+
+    public void ServerComputeLight(bool lightStateOn)
+    {
+        if (lightStateOn)
+        {
+            state.LightsOn++;
+        }
+        else
+        {
+            state.LightsOn--;
+        }
+    }
 
 }

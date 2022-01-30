@@ -1,6 +1,7 @@
 using UnityEngine;
+using Photon.Bolt;
 
-public class PlayerAtack : MonoBehaviour
+public class PlayerAtack : EntityBehaviour<ICustomStatePlayer>
 {
     public bool AtackIsActive { get; set; }
 
@@ -24,7 +25,7 @@ public class PlayerAtack : MonoBehaviour
         AtackIsActive = false;
     }
 
-    private void Update()
+    public override void SimulateOwner()
     {
         if (!AtackIsActive)
         {

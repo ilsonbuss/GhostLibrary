@@ -98,6 +98,21 @@ public class NetworksCallbacks : GlobalEventListener
         //GameState.Instance.ServerSpawnPlayer(e.Player, e.Dark);
         //Debug.LogWarning("PlayerEnter " + e.Nickname + " Dark: " + e.Dark);
     }
+
+    public override void OnEvent(PlayerAtackEvent e)
+    {
+        if (e.Victim == null)
+        {
+            return;
+        }
+
+        if (e.Victim.IsOwner)
+        {
+            var victmy = e.Victim.gameObject.TryGetComponent<BasicCharacter>(out var entity) ? entity : null;
+            victmy?.Respawn();
+        }
+    }
+
     public override void OnEvent(CrystalHit e)
     {
         if (e != null &&

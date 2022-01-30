@@ -5,6 +5,9 @@ public class PlayerAtack : EntityBehaviour<ICustomStatePlayer>
 {
     public bool AtackIsActive { get; set; }
 
+    public BoltEntity Entity { get; set; }
+
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag != "Player")
@@ -12,6 +15,7 @@ public class PlayerAtack : EntityBehaviour<ICustomStatePlayer>
             return;
         }
 
+        Entity = other.TryGetComponent<BoltEntity>(out var entity) ? entity : null;
         AtackIsActive = true;
     }
 
@@ -23,6 +27,7 @@ public class PlayerAtack : EntityBehaviour<ICustomStatePlayer>
         }
 
         AtackIsActive = false;
+        Entity = null;
     }
 
     public override void SimulateOwner()
@@ -34,7 +39,10 @@ public class PlayerAtack : EntityBehaviour<ICustomStatePlayer>
 
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("Atacou");
+            var eventAtack = PlayerAtackEvent.Create();
+            eventAtack.Victim = Entity;
+            eventAtack.Atacker = entity;
+            eventAtack.Send();
         }
     }
 }

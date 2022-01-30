@@ -20,19 +20,25 @@ public class NetworksCallbacks : GlobalEventListener
         var darkGhost = e.Player.gameObject.transform.Find("DarkGhost").gameObject;
         if(e.Dark)
         {
-            Debug.Log("Destroy lite!" + lightGhost.tag + " _  local: " + e.Player.IsOwner);
-            Destroy(lightGhost);
+            //Debug.Log("Destroy lite!" + lightGhost.tag + " _  local: " + e.Player.IsOwner);
             darkGhost.SetActive(true);
+            e.Player.gameObject.GetComponent<BasicCharacter>().ghost = darkGhost;
+            //Destroy(lightGhost);
+            
+            
         }
         else
         {
-            Debug.Log("Destroy dark! " + darkGhost.tag + " _ " + " _  local: " + e.Player.IsOwner);
-            Destroy(darkGhost);
+            //Debug.Log("Destroy dark! " + darkGhost.tag + " _ " + " _  local: " + e.Player.IsOwner);
             lightGhost.SetActive(true);
+            e.Player.gameObject.GetComponent<BasicCharacter>().ghost = lightGhost;
+            //Destroy(darkGhost);
+            
         }
 
         //GameState.Instance.ServerSpawnPlayer(e.Player, e.Dark);
         //Debug.LogWarning("PlayerEnter " + e.Nickname + " Dark: " + e.Dark);
     }
+
 
 }

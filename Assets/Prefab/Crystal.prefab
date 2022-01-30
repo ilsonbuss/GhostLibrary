@@ -38,7 +38,7 @@ Light:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1129172624958734264}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
@@ -123,7 +123,7 @@ Transform:
   m_LocalScale: {x: 21.395359, y: 21.395357, z: 21.395357}
   m_Children: []
   m_Father: {fileID: 2628083529809697650}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8580124554808561643
 MeshFilter:
@@ -205,7 +205,7 @@ Transform:
   m_LocalScale: {x: 21.395359, y: 21.395357, z: 21.395357}
   m_Children: []
   m_Father: {fileID: 2628083529809697650}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5069940042749171470
 MeshFilter:
@@ -368,8 +368,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3166848826377732263}
-  - {fileID: 9065232592232963608}
   - {fileID: 1370681481638584456}
+  - {fileID: 9065232592232963608}
   - {fileID: 3617372103463841977}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -403,7 +403,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sceneGuid: 
   _serializerGuid: be2075a0-a364-473a-9e5b-2959c5fcdb90
-  _prefabId: 3
+  _prefabId: 2
   _updateRate: 1
   _autoFreezeProxyFrames: 0
   _clientPredicted: 1

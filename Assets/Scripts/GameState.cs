@@ -28,7 +28,7 @@ public class GameState : EntityBehaviour<IGameState>
         {
             MaxGameTime = 600f;
             state.GameStarted = true;
-            state.TotalCrystals = 20;
+            state.TotalCrystals = 6;
             state.AttackCooldown = 0.8f;
             state.LightsOn = state.TotalCrystals / 2;
             Ready1 = true; Ready2 = true;
@@ -52,17 +52,23 @@ public class GameState : EntityBehaviour<IGameState>
         //Debug.Log("Spawning Lights --------------------------------------------------------------");
 
         var LightSpawners = GameObject.FindGameObjectsWithTag("LightSpawnerMarker");
-        var positions = LightSpawners.Select(l => new
-        {
-            randomOrder = Random.Range(0, LightSpawners.Length),
-            position = l.transform.position
-        }).OrderBy(a => a.randomOrder)
-          .Take(6)
-          .Select(a => a.position);
 
+        var positionsUnique = LightSpawners.Select(l => l.transform.position).ToList();
+        var positionsFinal = new List<Vector3>();
+        while (positionsFinal.Count < 6)
+        {
+            var randIndex = Random.Range(0, positionsUnique.Count);
+            if (LightSpawners[randIndex] != null)
+            {
+                if (!positionsFinal.Contains(positionsUnique[randIndex]))
+                {
+                    positionsFinal.Add(positionsUnique[randIndex]);
+                }
+            }
+        }
 
         //spawn active crystals
-        foreach (var position in positions.Take(3))
+        foreach (var position in positionsFinal.Take(3))
         {
             var entity = BoltNetwork.Instantiate(BoltPrefabs.Crystal, position, Quaternion.identity);
             var lightManager = entity.gameObject.GetComponent<LightManager>();
@@ -73,7 +79,7 @@ public class GameState : EntityBehaviour<IGameState>
         }
 
         //spawn black crystals
-        foreach (var position in positions.Skip(3))
+        foreach (var position in positionsFinal.Skip(3))
         {
             var entity = BoltNetwork.Instantiate(BoltPrefabs.Crystal, position, Quaternion.identity);
             var lightManager = entity.gameObject.GetComponent<LightManager>();

@@ -38,7 +38,7 @@ public class PlayerAtack : EntityBehaviour<ICustomStatePlayer>
         }
 
         //if (Input.GetMouseButtonDown(0))
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             var eventAtack = PlayerAtackEvent.Create();
             eventAtack.Victim = Entity;

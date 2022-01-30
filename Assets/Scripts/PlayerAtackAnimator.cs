@@ -15,7 +15,8 @@ public class PlayerAtackAnimator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown(KeyCode.Space))
+        //if (Input.GetMouseButtonDown(0))
         {
             animator.SetTrigger("AtackTrigger");
         }

@@ -169,7 +169,7 @@ public class BasicCharacter : EntityBehaviour<ICustomStatePlayer>
         targetQuat = Quaternion.Euler(new Vector3(ghost.transform.rotation.x, targetMoveAngle, ghost.transform.rotation.z));
 
 
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             if (state.IsNearCrystal && nearCrystal != null)
             {

@@ -14,6 +14,15 @@ public class NetworksCallbacks : GlobalEventListener
         BoltNetwork.Instantiate(cubePrefab, spawnPos, Quaternion.identity);
     }
 
+    public void Update()
+    {
+        //if game ended show screen of winner
+        if (GameState.Instance.state.GameFinished)
+        {
+
+        }
+    }
+
     public override void OnEvent(PlayerEnter e)
     {
         var lightGhost = e.Player.gameObject.transform.Find("LightGhost").gameObject;

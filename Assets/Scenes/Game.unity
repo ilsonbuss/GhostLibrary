@@ -2249,6 +2249,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Audio Source - Ambiente
       objectReference: {fileID: 0}
+    - target: {fileID: 2185778657415662643, guid: 9e9ec1176b5faa645bee79828222f5ee, type: 3}
+      propertyPath: m_Volume
+      value: 0.32
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e9ec1176b5faa645bee79828222f5ee, type: 3}
 --- !u!1001 &594405827
